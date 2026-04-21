@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)file:///Users/tsconnely/Downloads/priority_1.html -->
+<!-- saved from url=(0046)file:///Users/tsconnely/Downloads/index_1.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -22,19 +22,15 @@
 
     --q1-bg: #fef2f2;
     --q1-accent: #ef4444;
-    --q1-soft: #fee2e2;
 
     --q2-bg: #ecfdf5;
     --q2-accent: #10b981;
-    --q2-soft: #d1fae5;
 
     --q3-bg: #fffbeb;
     --q3-accent: #f59e0b;
-    --q3-soft: #fef3c7;
 
     --q4-bg: #eff6ff;
     --q4-accent: #3b82f6;
-    --q4-soft: #dbeafe;
 
     --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.04);
     --shadow-md: 0 4px 6px rgba(16, 24, 40, 0.04), 0 2px 4px rgba(16, 24, 40, 0.03);
@@ -67,12 +63,11 @@
     padding: 32px 40px 120px;
   }
 
-  /* ============ HEADER ============ */
   header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     gap: 24px;
     flex-wrap: wrap;
   }
@@ -80,7 +75,7 @@
   .greeting {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
 
   .greeting .hello {
@@ -90,19 +85,16 @@
   }
 
   .greeting h1 {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 700;
     letter-spacing: -0.02em;
-    line-height: 1.1;
-    color: var(--text);
+    line-height: 1.15;
   }
 
-  .greeting h1 .count {
-    color: var(--accent);
-  }
+  .greeting h1 .count { color: var(--accent); }
 
   .greeting .subtitle {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-dim);
     margin-top: 4px;
   }
@@ -114,130 +106,95 @@
     gap: 4px;
   }
 
-  .date-chip .date {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-  }
+  .date-chip .date { font-size: 14px; font-weight: 600; }
+  .date-chip .time { font-size: 12px; color: var(--text-dim); font-weight: 500; }
 
-  .date-chip .time {
-    font-size: 12px;
-    color: var(--text-dim);
-    font-weight: 500;
-  }
-
-  /* ============ STAT PILLS ============ */
   .stat-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 14px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
 
   .stat-pill {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 16px 18px;
+    padding: 14px 16px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     box-shadow: var(--shadow-sm);
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-
-  .stat-pill:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
   }
 
   .stat-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 16px;
     flex-shrink: 0;
   }
 
-  .stat-icon.q1 { background: var(--q1-bg); color: var(--q1-accent); }
-  .stat-icon.q2 { background: var(--q2-bg); color: var(--q2-accent); }
-  .stat-icon.q3 { background: var(--q3-bg); color: var(--q3-accent); }
-  .stat-icon.q4 { background: var(--q4-bg); color: var(--q4-accent); }
+  .stat-icon.q1 { background: var(--q1-bg); }
+  .stat-icon.q2 { background: var(--q2-bg); }
+  .stat-icon.q3 { background: var(--q3-bg); }
+  .stat-icon.q4 { background: var(--q4-bg); }
 
   .stat-body { flex: 1; min-width: 0; }
-
   .stat-label {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-dim);
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
   .stat-value {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
-    color: var(--text);
     letter-spacing: -0.02em;
     line-height: 1.1;
   }
 
-  /* ============ INPUT BAR ============ */
   .input-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 6px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
     gap: 6px;
     flex-wrap: wrap;
-    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
   .input-card:focus-within {
     border-color: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-soft);
+    box-shadow: 0 0 0 3px var(--accent-soft);
   }
 
   .input-card input[type="text"] {
     flex: 1;
-    min-width: 200px;
+    min-width: 180px;
     background: transparent;
     border: none;
-    color: var(--text);
-    padding: 12px 14px;
+    padding: 11px 14px;
     font-family: var(--font);
     font-size: 14px;
     outline: none;
   }
 
-  .input-card input[type="text"]::placeholder {
-    color: var(--text-faint);
-  }
+  .input-card input[type="text"]::placeholder { color: var(--text-faint); }
 
-  .input-card input[type="date"] {
-    background: var(--surface-soft);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 10px 12px;
-    font-family: var(--font);
-    font-size: 13px;
-    font-weight: 500;
-    border-radius: var(--radius-sm);
-    outline: none;
-  }
-
+  .input-card input[type="date"],
   .input-card select {
     background: var(--surface-soft);
     border: 1px solid var(--border);
-    color: var(--text);
-    padding: 10px 14px;
+    padding: 9px 12px;
     font-family: var(--font);
     font-size: 13px;
     font-weight: 500;
@@ -248,13 +205,12 @@
 
   .mic-btn {
     background: var(--surface-soft);
-    color: var(--text);
     border: 1px solid var(--border);
-    padding: 10px 14px;
+    padding: 9px 13px;
     font-size: 16px;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: all 0.15s;
+    transition: background 0.15s, border-color 0.15s;
   }
 
   .mic-btn:hover {
@@ -266,49 +222,42 @@
     background: var(--q1-accent);
     color: white;
     border-color: var(--q1-accent);
-    animation: pulse 1.2s ease-in-out infinite;
+    animation: pulse 1.4s ease-in-out infinite;
   }
 
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-    50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35); }
+    50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
   }
 
   .add-btn {
     background: var(--accent);
     color: white;
     border: none;
-    padding: 11px 22px;
+    padding: 10px 20px;
     font-family: var(--font);
     font-size: 13px;
     font-weight: 600;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: filter 0.15s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
   }
 
   .add-btn:hover { filter: brightness(1.1); }
-  .add-btn:active { transform: scale(0.97); }
 
-  /* ============ BOARD ============ */
   .board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+    gap: 16px;
   }
 
   .column {
     background: var(--surface);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
-    padding: 18px;
-    min-height: 500px;
+    padding: 16px;
+    min-height: 420px;
     display: flex;
     flex-direction: column;
-    transition: border-color 0.2s;
   }
 
   .column.drag-over {
@@ -320,20 +269,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--border);
   }
 
-  .column-title-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .column-title-group { display: flex; align-items: center; gap: 10px; }
 
   .column-dot {
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     flex-shrink: 0;
   }
@@ -346,7 +291,6 @@
   .column-title {
     font-size: 14px;
     font-weight: 700;
-    color: var(--text);
     letter-spacing: -0.01em;
   }
 
@@ -376,32 +320,26 @@
   .task-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     flex: 1;
     overflow-y: auto;
-    max-height: 600px;
+    max-height: 540px;
     padding: 2px;
     margin: -2px;
   }
 
-  .task-list::-webkit-scrollbar { width: 6px; }
+  .task-list::-webkit-scrollbar { width: 5px; }
   .task-list::-webkit-scrollbar-thumb {
     background: var(--border-hover);
     border-radius: 3px;
   }
 
-  .task-list::-webkit-scrollbar-thumb:hover {
-    background: var(--text-faint);
-  }
-
-  /* ============ TASK CARD ============ */
   .task {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 14px;
+    padding: 12px 14px;
     cursor: grab;
-    transition: all 0.15s;
     box-shadow: var(--shadow-sm);
     position: relative;
     overflow: hidden;
@@ -414,7 +352,6 @@
     top: 0;
     bottom: 0;
     width: 3px;
-    transition: width 0.15s;
   }
 
   .column.q1 .task::before { background: var(--q1-accent); }
@@ -424,17 +361,17 @@
 
   .task:hover {
     border-color: var(--border-hover);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
   }
 
-  .task.dragging {
-    opacity: 0.4;
-    cursor: grabbing;
-    transform: rotate(2deg);
+  .task.dragging { opacity: 0.4; cursor: grabbing; }
+  .task.just-updated { animation: flash 0.6s ease-out; }
+
+  @keyframes flash {
+    0% { background: var(--accent-soft); }
+    100% { background: var(--surface); }
   }
 
-  .task.done { opacity: 0.55; }
+  .task.done { opacity: 0.5; }
   .task.done .task-title {
     text-decoration: line-through;
     color: var(--text-dim);
@@ -444,7 +381,6 @@
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    margin-bottom: 6px;
   }
 
   .task-check {
@@ -460,7 +396,6 @@
     justify-content: center;
     font-size: 11px;
     color: transparent;
-    transition: all 0.15s;
     background: var(--surface);
   }
 
@@ -480,9 +415,8 @@
   .task-body { flex: 1; min-width: 0; }
 
   .task-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    color: var(--text);
     line-height: 1.35;
     word-wrap: break-word;
     cursor: pointer;
@@ -502,20 +436,17 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: all 0.15s;
     flex-shrink: 0;
     line-height: 1;
+    transition: opacity 0.1s;
   }
 
   .task:hover .task-delete { opacity: 1; }
-  .task-delete:hover {
-    background: var(--q1-bg);
-    color: var(--q1-accent);
-  }
+  .task-delete:hover { background: var(--q1-bg); color: var(--q1-accent); }
 
   .task-meta {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     margin-top: 10px;
     flex-wrap: wrap;
     align-items: center;
@@ -525,49 +456,27 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    padding: 3px 8px;
+    padding: 2px 7px;
     border-radius: 100px;
     background: var(--bg);
     color: var(--text-dim);
   }
 
-  .task-tag.overdue {
-    background: var(--q1-bg);
-    color: var(--q1-accent);
-  }
-
-  .task-tag.soon {
-    background: var(--q3-bg);
-    color: var(--q3-accent);
-  }
-
-  .task-tag.notes {
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
+  .task-tag.overdue { background: var(--q1-bg); color: var(--q1-accent); }
+  .task-tag.soon { background: var(--q3-bg); color: var(--q3-accent); }
+  .task-tag.notes { background: var(--accent-soft); color: var(--accent); }
 
   .empty {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-faint);
     text-align: center;
-    padding: 28px 16px;
+    padding: 24px 12px;
     font-weight: 500;
   }
 
-  .empty::before {
-    content: '';
-    display: block;
-    width: 36px;
-    height: 36px;
-    margin: 0 auto 10px;
-    background: var(--bg);
-    border-radius: 50%;
-    opacity: 0.6;
-  }
-
-  /* ============ VOICE FEEDBACK ============ */
+  /* Voice feedback */
   .voice-feedback {
     position: fixed;
     bottom: 20px;
@@ -576,16 +485,16 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 14px 20px;
+    padding: 14px 18px;
     display: flex;
     align-items: center;
     gap: 14px;
     z-index: 50;
     box-shadow: var(--shadow-lg);
-    max-width: 90vw;
-    min-width: 340px;
+    max-width: 94vw;
+    width: 520px;
     opacity: 0;
-    transition: all 0.3s;
+    transition: transform 0.25s, opacity 0.25s;
   }
 
   .voice-feedback.active {
@@ -609,41 +518,40 @@
 
   .voice-text { flex: 1; min-width: 0; }
 
-  .voice-text .label {
-    font-size: 11px;
+  .voice-label {
+    font-size: 10px;
     color: var(--text-dim);
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     margin-bottom: 2px;
   }
 
   .voice-transcript {
-    font-size: 14px;
-    color: var(--text);
+    font-size: 13px;
     font-weight: 500;
     word-wrap: break-word;
+    line-height: 1.3;
   }
 
+  .voice-transcript.interim { color: var(--text-dim); font-style: italic; }
+
   .voice-close {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    padding: 7px 14px;
+    background: var(--q1-accent);
+    border: none;
+    color: white;
+    padding: 8px 16px;
     font-family: var(--font);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     border-radius: var(--radius-sm);
+    flex-shrink: 0;
   }
 
-  .voice-close:hover {
-    background: var(--q1-bg);
-    color: var(--q1-accent);
-    border-color: var(--q1-bg);
-  }
+  .voice-close:hover { filter: brightness(1.1); }
 
-  /* ============ TOAST ============ */
+  /* Toast */
   .toast {
     position: fixed;
     top: 24px;
@@ -651,13 +559,13 @@
     transform: translateX(-50%) translateY(-40px);
     background: var(--text);
     color: white;
-    padding: 12px 20px;
+    padding: 11px 18px;
     font-size: 13px;
     font-weight: 600;
     border-radius: 100px;
     z-index: 300;
     opacity: 0;
-    transition: all 0.3s;
+    transition: opacity 0.2s, transform 0.2s;
     box-shadow: var(--shadow-lg);
     max-width: 90vw;
   }
@@ -670,7 +578,7 @@
   .toast.success { background: var(--q2-accent); }
   .toast.error { background: var(--q1-accent); }
 
-  /* ============ MODAL ============ */
+  /* Modal */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -696,17 +604,13 @@
   }
 
   .modal-head {
-    padding: 22px 26px 18px;
+    padding: 22px 26px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .modal-head h2 {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
+  .modal-head h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
 
   .modal-close {
     background: var(--bg);
@@ -721,13 +625,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.15s;
   }
 
-  .modal-close:hover {
-    background: var(--q1-bg);
-    color: var(--q1-accent);
-  }
+  .modal-close:hover { background: var(--q1-bg); color: var(--q1-accent); }
 
   .modal-body { padding: 4px 26px 20px; }
 
@@ -735,10 +635,12 @@
 
   .field label {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-dim);
     font-weight: 600;
     margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
 
   .field input[type="text"],
@@ -749,13 +651,12 @@
     background: var(--surface-soft);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 11px 13px;
+    padding: 10px 12px;
     font-family: var(--font);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     border-radius: var(--radius-sm);
     outline: none;
-    transition: all 0.15s;
   }
 
   .field input:focus,
@@ -786,7 +687,7 @@
     gap: 10px;
     background: var(--surface-soft);
     border: 1px solid var(--border);
-    padding: 9px 12px;
+    padding: 8px 12px;
     border-radius: var(--radius-sm);
   }
 
@@ -812,11 +713,7 @@
   }
 
   .subtask-text { flex: 1; font-size: 13px; font-weight: 500; }
-
-  .subtask.done .subtask-text {
-    text-decoration: line-through;
-    color: var(--text-dim);
-  }
+  .subtask.done .subtask-text { text-decoration: line-through; color: var(--text-dim); }
 
   .subtask-remove {
     background: none;
@@ -827,22 +724,18 @@
     width: 22px;
     height: 22px;
     border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .subtask-remove:hover { background: var(--q1-bg); color: var(--q1-accent); }
 
   .add-subtask { display: flex; gap: 8px; }
-
   .add-subtask input { flex: 1; }
 
   .add-subtask button {
     background: var(--accent-soft);
-    border: 1px solid transparent;
+    border: none;
     color: var(--accent);
-    padding: 10px 16px;
+    padding: 9px 16px;
     font-family: var(--font);
     font-size: 12px;
     font-weight: 600;
@@ -850,13 +743,8 @@
     border-radius: var(--radius-sm);
   }
 
-  .add-subtask button:hover {
-    background: var(--accent);
-    color: white;
-  }
-
   .modal-foot {
-    padding: 18px 26px 22px;
+    padding: 16px 26px 22px;
     border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -874,13 +762,9 @@
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
-    transition: all 0.15s;
   }
 
-  .btn:hover {
-    background: var(--bg);
-    border-color: var(--border-hover);
-  }
+  .btn:hover { background: var(--bg); border-color: var(--border-hover); }
 
   .btn-primary {
     background: var(--accent);
@@ -888,23 +772,11 @@
     color: white;
   }
 
-  .btn-primary:hover {
-    filter: brightness(1.1);
-    background: var(--accent);
-    border-color: var(--accent);
-  }
+  .btn-primary:hover { filter: brightness(1.1); background: var(--accent); }
 
-  .btn-danger {
-    color: var(--q1-accent);
-    border-color: var(--border);
-  }
+  .btn-danger { color: var(--q1-accent); }
+  .btn-danger:hover { background: var(--q1-bg); border-color: var(--q1-accent); }
 
-  .btn-danger:hover {
-    background: var(--q1-bg);
-    border-color: var(--q1-accent);
-  }
-
-  /* ============ TOOLBAR ============ */
   .toolbar {
     display: flex;
     gap: 16px;
@@ -918,6 +790,7 @@
     font-size: 12px;
     color: var(--text-dim);
     font-weight: 500;
+    line-height: 1.6;
   }
 
   .voice-help code {
@@ -931,61 +804,41 @@
     font-weight: 600;
   }
 
-  .toolbar-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
   .toolbar-actions button {
     background: transparent;
     border: 1px solid var(--border);
     color: var(--text-dim);
     cursor: pointer;
-    padding: 8px 14px;
+    padding: 7px 13px;
     font-family: var(--font);
     font-size: 12px;
     font-weight: 600;
     border-radius: var(--radius-sm);
-    transition: all 0.15s;
   }
 
   .toolbar-actions button:hover {
     color: var(--text);
     background: var(--surface);
-    border-color: var(--border-hover);
   }
 
-  /* ============ RESPONSIVE ============ */
   @media (max-width: 1100px) {
-    .board {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .stat-row {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .board { grid-template-columns: repeat(2, 1fr); }
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 720px) {
     .app { padding: 20px 16px 120px; }
-    .greeting h1 { font-size: 26px; }
-    .board {
-      grid-template-columns: 1fr;
-    }
-    .input-card {
-      flex-direction: column;
-      align-items: stretch;
-    }
+    .greeting h1 { font-size: 24px; }
+    .board { grid-template-columns: 1fr; }
+    .input-card { flex-direction: column; align-items: stretch; }
     .input-card input[type="text"],
     .input-card input[type="date"],
     .input-card select,
-    .add-btn,
-    .mic-btn {
-      width: 100%;
-      justify-content: center;
-    }
-    .column { min-height: 200px; }
-    .column .task-list { max-height: 400px; }
+    .add-btn, .mic-btn { width: 100%; justify-content: center; }
+    .column { min-height: 180px; }
+    .column .task-list { max-height: 360px; }
     header { flex-direction: column; align-items: flex-start; }
     .date-chip { align-items: flex-start; }
   }
@@ -995,13 +848,13 @@
 <div class="app">
   <header>
     <div class="greeting">
-      <div class="hello">Good <span id="time-of-day">afternoon</span>, Trent 👋</div>
+      <div class="hello">Good <span id="time-of-day">evening</span>, Trent 👋</div>
       <h1>You have <span class="count" id="count-hero">a fresh start</span> today</h1>
       <div class="subtitle" id="subtitle">Add your first task to get going.</div>
     </div>
     <div class="date-chip">
       <div class="date" id="current-date">Tuesday, April 21</div>
-      <div class="time" id="current-time">3:37 PM</div>
+      <div class="time" id="current-time">5:26 PM</div>
     </div>
   </header>
 
@@ -1028,16 +881,16 @@
       </div>
     </div>
     <div class="stat-pill">
-      <div class="stat-icon q4">💭</div>
+      <div class="stat-icon q4">✓</div>
       <div class="stat-body">
-        <div class="stat-label">Completed today</div>
+        <div class="stat-label">Done today</div>
         <div class="stat-value" id="stat-done">0</div>
       </div>
     </div>
   </div>
 
   <div class="input-card">
-    <input type="text" id="quick-input" placeholder="What needs to happen today?">
+    <input type="text" id="quick-input" placeholder="What needs to happen?">
     <input type="date" id="quick-deadline" title="Deadline">
     <select id="quick-quadrant" title="Priority quadrant">
       <option value="1">🔥 Do</option>
@@ -1046,7 +899,7 @@
       <option value="4" selected="">💭 Eliminate</option>
     </select>
     <button id="mic-toggle" class="mic-btn" title="Voice input">🎙</button>
-    <button id="quick-add" class="add-btn">+ Add task</button>
+    <button id="quick-add" class="add-btn">+ Add</button>
   </div>
 
   <div class="board">
@@ -1109,7 +962,11 @@
 
   <div class="toolbar">
     <div class="voice-help">
-      Try voice: <code>add urgent call Brady tomorrow</code> or <code>mark call Brady done</code>
+      <strong>Voice commands:</strong>
+      <code>add urgent call Brady tomorrow</code>
+      <code>move call Brady to plan</code>
+      <code>change Brady deadline to Friday</code>
+      <code>mark Brady done</code>
     </div>
     <div class="toolbar-actions">
       <button id="clear-done">Clear completed</button>
@@ -1120,20 +977,17 @@
   </div>
 </div>
 
-<!-- Voice feedback -->
 <div class="voice-feedback" id="voice-feedback">
   <div class="voice-indicator"></div>
   <div class="voice-text">
-    <div class="label">Listening...</div>
-    <div class="voice-transcript" id="voice-transcript">Say something</div>
+    <div class="voice-label" id="voice-label">Listening</div>
+    <div class="voice-transcript" id="voice-transcript">Speak freely. Tap Stop when done.</div>
   </div>
   <button class="voice-close" id="voice-stop">Stop</button>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Modal -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-head">
@@ -1182,646 +1036,874 @@
 </div>
 
 <script>
-  // ============ STATE ============
-  const STORAGE_KEY = 'priority_tasks_v1';
-  let tasks = [];
-  let editingId = null;
+/* ================================================================
+   PRIORITY — single-file task board with voice control
+   Performance notes:
+   - Incremental DOM updates. Full re-render only on initial load,
+     drag/drop, import, or delete-many. Everything else updates
+     just the affected task/column.
+   - Event delegation: one click listener per column list.
+   - Debounced localStorage writes (200ms) to avoid blocking on
+     rapid updates.
+   ================================================================ */
 
-  // ============ PERSISTENCE ============
-  function loadTasks() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      tasks = raw ? JSON.parse(raw) : [];
-    } catch (e) { tasks = []; }
-  }
+const STORAGE_KEY = 'priority_tasks_v1';
+const tasks = [];
+const taskIndex = new Map();  // id -> task (O(1) lookup)
+let editingId = null;
 
-  function saveTasks() {
+/* ---------- persistence ---------- */
+let saveTimer = null;
+function saveTasks() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); }
-    catch (e) { toast('Storage error: ' + e.message, 'error'); }
-  }
+    catch (e) { toast('Storage error', 'error'); }
+  }, 200);
+}
 
-  function uid() {
-    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-  }
-
-  // ============ HELPERS ============
-  function todayISO() {
-    const d = new Date();
-    const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
-  }
-
-  function formatDeadline(iso) {
-    if (!iso) return null;
-    const today = new Date(todayISO());
-    const target = new Date(iso);
-    const diff = Math.round((target - today) / 86400000);
-    if (diff < 0) return { text: `${Math.abs(diff)}d overdue`, cls: 'overdue' };
-    if (diff === 0) return { text: 'Today', cls: 'soon' };
-    if (diff === 1) return { text: 'Tomorrow', cls: 'soon' };
-    if (diff <= 3) return { text: `In ${diff} days`, cls: 'soon' };
-    const opts = { month: 'short', day: 'numeric' };
-    return { text: target.toLocaleDateString('en-US', opts), cls: '' };
-  }
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[c]));
-  }
-
-  // ============ RENDER ============
-  function render() {
-    for (let q = 1; q <= 4; q++) {
-      const list = document.getElementById(`list-${q}`);
-      const quadTasks = tasks.filter(t => t.quadrant === q);
-      document.getElementById(`count-${q}`).textContent = quadTasks.length;
-
-      if (quadTasks.length === 0) {
-        list.innerHTML = '<div class="empty">No tasks yet</div>';
-        continue;
-      }
-
-      quadTasks.sort((a, b) => {
-        if (a.done !== b.done) return a.done ? 1 : -1;
-        if (a.deadline && b.deadline) return a.deadline.localeCompare(b.deadline);
-        if (a.deadline) return -1;
-        if (b.deadline) return 1;
-        return b.created - a.created;
-      });
-
-      list.innerHTML = quadTasks.map(t => {
-        const dl = formatDeadline(t.deadline);
-        const subCount = t.subtasks ? t.subtasks.length : 0;
-        const subDone = t.subtasks ? t.subtasks.filter(s => s.done).length : 0;
-        return `
-          <div class="task ${t.done ? 'done' : ''}" draggable="true" data-id="${t.id}">
-            <div class="task-top-row">
-              <div class="task-check" data-action="toggle" data-id="${t.id}">✓</div>
-              <div class="task-body">
-                <div class="task-title" data-action="edit" data-id="${t.id}">${escapeHtml(t.title)}</div>
-              </div>
-              <button class="task-delete" data-action="delete" data-id="${t.id}" title="Delete">×</button>
-            </div>
-            ${(dl || subCount > 0 || t.notes) ? `
-              <div class="task-meta">
-                ${dl ? `<span class="task-tag ${dl.cls}">⏱ ${dl.text}</span>` : ''}
-                ${subCount > 0 ? `<span class="task-tag">☰ ${subDone}/${subCount}</span>` : ''}
-                ${t.notes ? `<span class="task-tag notes">📝 Note</span>` : ''}
-              </div>
-            ` : ''}
-          </div>
-        `;
-      }).join('');
+function loadTasks() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const arr = raw ? JSON.parse(raw) : [];
+    tasks.length = 0;
+    taskIndex.clear();
+    for (const t of arr) {
+      tasks.push(t);
+      taskIndex.set(t.id, t);
     }
-    updateStats();
-  }
+  } catch (e) { /* start fresh */ }
+}
 
-  function updateStats() {
-    const today = todayISO();
-    const openQ1 = tasks.filter(t => !t.done && t.quadrant === 1).length;
-    const openQ2 = tasks.filter(t => !t.done && t.quadrant === 2).length;
-    const openQ3 = tasks.filter(t => !t.done && t.quadrant === 3).length;
-    const doneToday = tasks.filter(t => t.done && t.doneAt && t.doneAt.slice(0, 10) === today).length;
-    const totalOpen = tasks.filter(t => !t.done).length;
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
 
-    document.getElementById('stat-q1').textContent = openQ1;
-    document.getElementById('stat-q2').textContent = openQ2;
-    document.getElementById('stat-q3').textContent = openQ3;
-    document.getElementById('stat-done').textContent = doneToday;
+/* ---------- helpers ---------- */
+function todayISO() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
 
-    const heroEl = document.getElementById('count-hero');
-    const subtitleEl = document.getElementById('subtitle');
+function formatDeadline(iso) {
+  if (!iso) return null;
+  const today = new Date(todayISO());
+  const target = new Date(iso);
+  const diff = Math.round((target - today) / 86400000);
+  if (diff < 0) return { text: `${Math.abs(diff)}d overdue`, cls: 'overdue' };
+  if (diff === 0) return { text: 'Today', cls: 'soon' };
+  if (diff === 1) return { text: 'Tomorrow', cls: 'soon' };
+  if (diff <= 3) return { text: `In ${diff} days`, cls: 'soon' };
+  return { text: target.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), cls: '' };
+}
 
-    if (totalOpen === 0 && doneToday > 0) {
-      heroEl.textContent = 'a clean slate';
-      subtitleEl.textContent = `You've completed ${doneToday} task${doneToday === 1 ? '' : 's'} today. Nice work.`;
-    } else if (totalOpen === 0) {
-      heroEl.textContent = 'a fresh start';
-      subtitleEl.textContent = 'Add your first task to get going.';
-    } else {
-      heroEl.textContent = `${totalOpen} task${totalOpen === 1 ? '' : 's'}`;
-      if (openQ1 > 0) subtitleEl.textContent = `${openQ1} item${openQ1 === 1 ? '' : 's'} need your attention now.`;
-      else if (openQ2 > 0) subtitleEl.textContent = 'Focus on what matters. No fires today.';
-      else subtitleEl.textContent = "Let's make it count.";
-    }
-  }
+const escapeMap = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => escapeMap[c]);
+}
 
-  // ============ CRUD ============
-  function addTask({ title, quadrant, deadline, notes }) {
-    if (!title || !title.trim()) return null;
-    const t = {
-      id: uid(),
-      title: title.trim(),
-      quadrant: quadrant || 4,
-      deadline: deadline || null,
-      notes: notes || '',
-      subtasks: [],
-      done: false,
-      created: Date.now(),
-      doneAt: null
-    };
-    tasks.push(t);
-    saveTasks();
-    render();
-    return t;
-  }
-
-  function toggleTask(id) {
-    const t = tasks.find(x => x.id === id);
-    if (!t) return;
-    t.done = !t.done;
-    t.doneAt = t.done ? new Date().toISOString() : null;
-    saveTasks();
-    render();
-  }
-
-  function deleteTask(id) {
-    tasks = tasks.filter(t => t.id !== id);
-    saveTasks();
-    render();
-  }
-
-  function updateTask(id, updates) {
-    const t = tasks.find(x => x.id === id);
-    if (!t) return;
-    Object.assign(t, updates);
-    saveTasks();
-    render();
-  }
-
-  // ============ QUICK ADD ============
-  document.getElementById('quick-add').addEventListener('click', quickAdd);
-  document.getElementById('quick-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') quickAdd();
-  });
-
-  function quickAdd() {
-    const input = document.getElementById('quick-input');
-    const deadline = document.getElementById('quick-deadline').value;
-    const quadrant = parseInt(document.getElementById('quick-quadrant').value);
-    const title = input.value.trim();
-    if (!title) return;
-    addTask({ title, quadrant, deadline });
-    input.value = '';
-    document.getElementById('quick-deadline').value = '';
-    input.focus();
-  }
-
-  // ============ TASK INTERACTIONS ============
-  document.querySelectorAll('.task-list').forEach(list => {
-    list.addEventListener('click', e => {
-      const action = e.target.dataset.action;
-      const id = e.target.dataset.id;
-      if (!action || !id) return;
-      if (action === 'toggle') toggleTask(id);
-      else if (action === 'delete') deleteTask(id);
-      else if (action === 'edit') openEditor(id);
-    });
-  });
-
-  // ============ DRAG AND DROP ============
-  let draggedId = null;
-
-  document.addEventListener('dragstart', e => {
-    if (e.target.classList && e.target.classList.contains('task')) {
-      draggedId = e.target.dataset.id;
-      e.target.classList.add('dragging');
-    }
-  });
-
-  document.addEventListener('dragend', e => {
-    if (e.target.classList && e.target.classList.contains('task')) {
-      e.target.classList.remove('dragging');
-    }
-    document.querySelectorAll('.column').forEach(q => q.classList.remove('drag-over'));
-  });
-
-  document.querySelectorAll('.column').forEach(q => {
-    q.addEventListener('dragover', e => {
-      e.preventDefault();
-      q.classList.add('drag-over');
-    });
-    q.addEventListener('dragleave', () => {
-      q.classList.remove('drag-over');
-    });
-    q.addEventListener('drop', e => {
-      e.preventDefault();
-      q.classList.remove('drag-over');
-      if (!draggedId) return;
-      const newQuad = parseInt(q.dataset.quadrant);
-      updateTask(draggedId, { quadrant: newQuad });
-      draggedId = null;
-    });
-  });
-
-  // ============ EDITOR ============
-  function openEditor(id) {
-    const t = tasks.find(x => x.id === id);
-    if (!t) return;
-    editingId = id;
-    document.getElementById('edit-title').value = t.title;
-    document.getElementById('edit-quadrant').value = t.quadrant;
-    document.getElementById('edit-deadline').value = t.deadline || '';
-    document.getElementById('edit-notes').value = t.notes || '';
-    renderSubtasks();
-    document.getElementById('modal-overlay').classList.add('active');
-    setTimeout(() => document.getElementById('edit-title').focus(), 50);
-  }
-
-  function renderSubtasks() {
-    const t = tasks.find(x => x.id === editingId);
-    if (!t) return;
-    const container = document.getElementById('edit-subtasks');
-    if (!t.subtasks || t.subtasks.length === 0) {
-      container.innerHTML = '';
-      return;
-    }
-    container.innerHTML = t.subtasks.map((s, i) => `
-      <div class="subtask ${s.done ? 'done' : ''}">
-        <div class="subtask-check" data-action="sub-toggle" data-idx="${i}">✓</div>
-        <div class="subtask-text">${escapeHtml(s.text)}</div>
-        <button class="subtask-remove" data-action="sub-remove" data-idx="${i}">×</button>
+/* ---------- render (incremental) ---------- */
+function taskHTML(t) {
+  const dl = formatDeadline(t.deadline);
+  const subCount = t.subtasks ? t.subtasks.length : 0;
+  const subDone = t.subtasks ? t.subtasks.filter(s => s.done).length : 0;
+  const tags = [];
+  if (dl) tags.push(`<span class="task-tag ${dl.cls}">⏱ ${dl.text}</span>`);
+  if (subCount > 0) tags.push(`<span class="task-tag">☰ ${subDone}/${subCount}</span>`);
+  if (t.notes) tags.push(`<span class="task-tag notes">📝</span>`);
+  return `
+    <div class="task${t.done ? ' done' : ''}" draggable="true" data-id="${t.id}">
+      <div class="task-top-row">
+        <div class="task-check" data-action="toggle" data-id="${t.id}">✓</div>
+        <div class="task-body">
+          <div class="task-title" data-action="edit" data-id="${t.id}">${escapeHtml(t.title)}</div>
+        </div>
+        <button class="task-delete" data-action="delete" data-id="${t.id}" title="Delete">×</button>
       </div>
-    `).join('');
-  }
+      ${tags.length ? `<div class="task-meta">${tags.join('')}</div>` : ''}
+    </div>
+  `;
+}
 
-  document.getElementById('edit-subtasks').addEventListener('click', e => {
-    const action = e.target.dataset.action;
-    const idx = parseInt(e.target.dataset.idx);
-    if (isNaN(idx)) return;
-    const t = tasks.find(x => x.id === editingId);
-    if (!t) return;
-    if (action === 'sub-toggle') t.subtasks[idx].done = !t.subtasks[idx].done;
-    else if (action === 'sub-remove') t.subtasks.splice(idx, 1);
-    saveTasks();
-    renderSubtasks();
+function sortTasks(arr) {
+  return arr.sort((a, b) => {
+    if (a.done !== b.done) return a.done ? 1 : -1;
+    if (a.deadline && b.deadline) return a.deadline.localeCompare(b.deadline);
+    if (a.deadline) return -1;
+    if (b.deadline) return 1;
+    return b.created - a.created;
   });
+}
 
-  document.getElementById('add-subtask-btn').addEventListener('click', addSubtask);
-  document.getElementById('new-subtask').addEventListener('keydown', e => {
-    if (e.key === 'Enter') addSubtask();
-  });
-
-  function addSubtask() {
-    const input = document.getElementById('new-subtask');
-    const text = input.value.trim();
-    if (!text) return;
-    const t = tasks.find(x => x.id === editingId);
-    if (!t) return;
-    if (!t.subtasks) t.subtasks = [];
-    t.subtasks.push({ text, done: false });
-    input.value = '';
-    saveTasks();
-    renderSubtasks();
-  }
-
-  document.getElementById('save-edit').addEventListener('click', () => {
-    const title = document.getElementById('edit-title').value.trim();
-    if (!title) { toast('Title required', 'error'); return; }
-    updateTask(editingId, {
-      title,
-      quadrant: parseInt(document.getElementById('edit-quadrant').value),
-      deadline: document.getElementById('edit-deadline').value || null,
-      notes: document.getElementById('edit-notes').value
-    });
-    closeEditor();
-    toast('Saved', 'success');
-  });
-
-  document.getElementById('delete-task').addEventListener('click', () => {
-    if (confirm('Delete this task?')) {
-      deleteTask(editingId);
-      closeEditor();
-    }
-  });
-
-  document.getElementById('cancel-edit').addEventListener('click', closeEditor);
-  document.getElementById('modal-close').addEventListener('click', closeEditor);
-  document.getElementById('modal-overlay').addEventListener('click', e => {
-    if (e.target.id === 'modal-overlay') closeEditor();
-  });
-
-  function closeEditor() {
-    document.getElementById('modal-overlay').classList.remove('active');
-    editingId = null;
-  }
-
-  // ============ TOOLBAR ============
-  document.getElementById('clear-done').addEventListener('click', () => {
-    const count = tasks.filter(t => t.done).length;
-    if (count === 0) { toast('No completed tasks'); return; }
-    if (confirm(`Remove ${count} completed task(s)?`)) {
-      tasks = tasks.filter(t => !t.done);
-      saveTasks();
-      render();
-      toast('Cleared', 'success');
-    }
-  });
-
-  document.getElementById('export-data').addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify(tasks, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `priority-tasks-${todayISO()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  document.getElementById('import-data').addEventListener('click', () => {
-    document.getElementById('import-file').click();
-  });
-
-  document.getElementById('import-file').addEventListener('change', e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        if (!Array.isArray(data)) throw new Error('Invalid format');
-        if (confirm(`Import ${data.length} tasks? This will replace existing tasks.`)) {
-          tasks = data;
-          saveTasks();
-          render();
-          toast('Imported', 'success');
-        }
-      } catch (err) {
-        toast('Import failed: ' + err.message, 'error');
-      }
-    };
-    reader.readAsText(file);
-  });
-
-  // ============ TOAST ============
-  let toastTimer;
-  function toast(msg, type = '') {
-    const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.className = 'toast show ' + type;
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-      el.className = 'toast ' + type;
-    }, 2800);
-  }
-
-  // ============ CLOCK + GREETING ============
-  function updateClock() {
-    const d = new Date();
-    document.getElementById('current-date').textContent = d.toLocaleDateString('en-US', {
-      weekday: 'long', month: 'long', day: 'numeric'
-    });
-    document.getElementById('current-time').textContent = d.toLocaleTimeString('en-US', {
-      hour: 'numeric', minute: '2-digit'
-    });
-    const h = d.getHours();
-    let tod = 'morning';
-    if (h >= 12 && h < 17) tod = 'afternoon';
-    else if (h >= 17) tod = 'evening';
-    document.getElementById('time-of-day').textContent = tod;
-  }
-  updateClock();
-  setInterval(updateClock, 30000);
-
-  // ============ VOICE INPUT ============
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let recognition = null;
-  let isListening = false;
-
-  if (SpeechRecognition) {
-    recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    recognition.lang = 'en-US';
-
-    recognition.onresult = e => {
-      let interim = '', final = '';
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        const transcript = e.results[i][0].transcript;
-        if (e.results[i].isFinal) final += transcript;
-        else interim += transcript;
-      }
-      document.getElementById('voice-transcript').textContent = final || interim || '...';
-      if (final) processVoiceCommand(final.trim());
-    };
-
-    recognition.onerror = e => {
-      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
-        toast('Microphone blocked. Enable mic in browser settings.', 'error');
-      } else if (e.error !== 'no-speech' && e.error !== 'aborted') {
-        toast('Voice error: ' + e.error, 'error');
-      }
-      stopListening();
-    };
-
-    recognition.onend = () => {
-      if (isListening) {
-        try { recognition.start(); } catch (err) { stopListening(); }
-      }
-    };
+function renderColumn(q) {
+  const list = document.getElementById(`list-${q}`);
+  const quadTasks = sortTasks(tasks.filter(t => t.quadrant === q));
+  document.getElementById(`count-${q}`).textContent = quadTasks.length;
+  if (quadTasks.length === 0) {
+    list.innerHTML = '<div class="empty">No tasks yet</div>';
   } else {
-    document.getElementById('mic-toggle').style.display = 'none';
+    list.innerHTML = quadTasks.map(taskHTML).join('');
   }
+}
 
-  document.getElementById('mic-toggle').addEventListener('click', toggleListening);
-  document.getElementById('voice-stop').addEventListener('click', stopListening);
+function renderAll() {
+  for (let q = 1; q <= 4; q++) renderColumn(q);
+  updateStats();
+}
 
-  function toggleListening() {
-    if (isListening) stopListening(); else startListening();
-  }
-
-  function startListening() {
-    if (!recognition) return;
-    try {
-      recognition.start();
-      isListening = true;
-      document.getElementById('mic-toggle').classList.add('listening');
-      document.getElementById('voice-feedback').classList.add('active');
-      document.getElementById('voice-transcript').textContent = 'Say something...';
-    } catch (e) {
-      toast('Could not start mic: ' + e.message, 'error');
+function updateStats() {
+  const today = todayISO();
+  let openQ1 = 0, openQ2 = 0, openQ3 = 0, doneToday = 0, totalOpen = 0;
+  for (const t of tasks) {
+    if (!t.done) {
+      totalOpen++;
+      if (t.quadrant === 1) openQ1++;
+      else if (t.quadrant === 2) openQ2++;
+      else if (t.quadrant === 3) openQ3++;
+    } else if (t.doneAt && t.doneAt.slice(0, 10) === today) {
+      doneToday++;
     }
   }
+  document.getElementById('stat-q1').textContent = openQ1;
+  document.getElementById('stat-q2').textContent = openQ2;
+  document.getElementById('stat-q3').textContent = openQ3;
+  document.getElementById('stat-done').textContent = doneToday;
 
-  function stopListening() {
-    isListening = false;
-    if (recognition) { try { recognition.stop(); } catch (e) {} }
-    document.getElementById('mic-toggle').classList.remove('listening');
-    document.getElementById('voice-feedback').classList.remove('active');
+  const heroEl = document.getElementById('count-hero');
+  const subtitleEl = document.getElementById('subtitle');
+  if (totalOpen === 0 && doneToday > 0) {
+    heroEl.textContent = 'a clean slate';
+    subtitleEl.textContent = `You've completed ${doneToday} task${doneToday === 1 ? '' : 's'} today.`;
+  } else if (totalOpen === 0) {
+    heroEl.textContent = 'a fresh start';
+    subtitleEl.textContent = 'Add your first task to get going.';
+  } else {
+    heroEl.textContent = `${totalOpen} task${totalOpen === 1 ? '' : 's'}`;
+    if (openQ1 > 0) subtitleEl.textContent = `${openQ1} urgent item${openQ1 === 1 ? '' : 's'} to tackle.`;
+    else if (openQ2 > 0) subtitleEl.textContent = 'No fires. Focus on what matters.';
+    else subtitleEl.textContent = "Let's make it count.";
   }
+}
 
-  // ============ VOICE NLP ============
-  function processVoiceCommand(text) {
-    const lower = text.trim().toLowerCase();
-    const cleaned = lower.replace(/^(hey priority|priority|okay)[,\s]+/i, '').trim();
+/* ---------- incremental DOM ops ---------- */
+function taskEl(id) {
+  return document.querySelector(`.task[data-id="${id}"]`);
+}
 
-    // Complete
-    const doneMatch = cleaned.match(/^(?:mark|complete|finish|check off|check)\s+(.+?)(?:\s+(?:as\s+)?(?:done|complete|completed|finished))?$/i)
-                   || cleaned.match(/^(?:done|completed|finished)\s+(?:with\s+)?(.+)$/i)
-                   || cleaned.match(/^(.+)\s+(?:is\s+)?(?:done|complete|completed|finished)$/i);
-    if (doneMatch) {
-      const query = doneMatch[1].trim();
-      const match = findTaskByText(query);
-      if (match) {
-        if (!match.done) {
-          match.done = true;
-          match.doneAt = new Date().toISOString();
-          saveTasks();
-          render();
-          toast(`✓ Completed: ${match.title}`, 'success');
-        } else {
-          toast(`Already done: ${match.title}`);
-        }
-      } else {
-        toast(`No task found matching "${query}"`, 'error');
-      }
+function updateTaskDom(id) {
+  const t = taskIndex.get(id);
+  if (!t) return;
+  // Column change = re-render both columns
+  const existing = taskEl(id);
+  if (existing) {
+    const currentCol = parseInt(existing.closest('.column').dataset.quadrant);
+    if (currentCol !== t.quadrant) {
+      renderColumn(currentCol);
+      renderColumn(t.quadrant);
+      updateStats();
+      flashTask(id);
       return;
     }
-
-    // Delete
-    const deleteMatch = cleaned.match(/^(?:delete|remove|cancel)\s+(.+)$/i);
-    if (deleteMatch) {
-      const query = deleteMatch[1].trim();
-      const match = findTaskByText(query);
-      if (match) {
-        deleteTask(match.id);
-        toast(`Deleted: ${match.title}`, 'success');
-      } else {
-        toast(`No task found matching "${query}"`, 'error');
-      }
-      return;
-    }
-
-    // Add
-    let body = cleaned.replace(/^(?:add|create|new)\s+(?:(?:a|an)\s+)?(?:task\s+|item\s+|to-?do\s+|todo\s+)?/i, '');
-    body = body.replace(/^(?:task|item|to-?do|todo)\s+/i, '');
-
-    let quadrant = 4;
-    const importantUrgent = /\b(urgent(?:\s+and\s+important)?|critical|emergency|asap|right now|crisis)\b/i;
-    const importantOnly = /\b(important|strategic|plan(?:ning)?|long[- ]?term|growth)\b/i;
-    const urgentOnly = /\b(quick|interrupt(?:ion)?|delegate)\b/i;
-
-    if (importantUrgent.test(body)) quadrant = 1;
-    else if (importantOnly.test(body)) quadrant = 2;
-    else if (urgentOnly.test(body)) quadrant = 3;
-
-    body = body.replace(importantUrgent, '')
-               .replace(importantOnly, '')
-               .replace(urgentOnly, '')
-               .replace(/\b(?:priority|priority level)\s*\d+\b/i, '')
-               .trim();
-
-    const qMatch = body.match(/\b(?:q(?:uadrant)?\s*)([1-4])\b/i);
-    if (qMatch) {
-      quadrant = parseInt(qMatch[1]);
-      body = body.replace(qMatch[0], '').trim();
-    }
-
-    const { deadline, cleanedText } = parseDeadline(body);
-    body = cleanedText;
-    body = body.replace(/\s+/g, ' ').replace(/^[,.\s]+|[,.\s]+$/g, '').trim();
-
-    if (!body) { toast('Could not understand task', 'error'); return; }
-
-    body = body.charAt(0).toUpperCase() + body.slice(1);
-    const t = addTask({ title: body, quadrant, deadline });
-    if (t) {
-      const qName = ['', 'Do', 'Plan', 'Delegate', 'Eliminate'][quadrant];
-      const dText = deadline ? ` · ${formatDeadline(deadline).text.toLowerCase()}` : '';
-      toast(`+ ${qName}: ${body}${dText}`, 'success');
-    }
+    // Same column — replace node with re-sort
+    renderColumn(t.quadrant);
+    updateStats();
+    flashTask(id);
+  } else {
+    renderColumn(t.quadrant);
+    updateStats();
+    flashTask(id);
   }
+}
 
-  function findTaskByText(query) {
-    const q = query.toLowerCase().trim();
-    const open = tasks.filter(t => !t.done);
-    const done = tasks.filter(t => t.done);
-    const all = [...open, ...done];
-    let match = all.find(t => t.title.toLowerCase() === q);
-    if (match) return match;
-    match = all.find(t => t.title.toLowerCase().includes(q));
-    if (match) return match;
-    const qWords = q.split(/\s+/).filter(w => w.length > 2);
-    if (qWords.length === 0) return null;
-    let best = null, bestScore = 0;
-    for (const t of all) {
-      const tLower = t.title.toLowerCase();
-      let score = 0;
-      for (const w of qWords) if (tLower.includes(w)) score++;
-      if (score > bestScore) { best = t; bestScore = score; }
-    }
-    return bestScore >= Math.ceil(qWords.length / 2) ? best : null;
-  }
-
-  function parseDeadline(text) {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const toISO = d => {
-      const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
-      return `${y}-${m}-${day}`;
-    };
-
-    let m = text.match(/\b(?:by\s+|on\s+|due\s+)?today\b/i);
-    if (m) return { deadline: toISO(today), cleanedText: text.replace(m[0], '').trim() };
-
-    m = text.match(/\b(?:by\s+|on\s+|due\s+)?tomorrow\b/i);
-    if (m) { const d = new Date(today); d.setDate(d.getDate() + 1); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
-
-    m = text.match(/\bin\s+(\d+)\s+days?\b/i);
-    if (m) { const d = new Date(today); d.setDate(d.getDate() + parseInt(m[1])); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
-
-    m = text.match(/\bnext\s+week\b/i);
-    if (m) { const d = new Date(today); d.setDate(d.getDate() + 7); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
-
-    const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    m = text.match(/\b(?:by\s+|on\s+|this\s+|next\s+|due\s+)?(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\b/i);
-    if (m) {
-      const targetDay = days.indexOf(m[1].toLowerCase());
-      const currentDay = today.getDay();
-      let diff = targetDay - currentDay;
-      if (diff <= 0) diff += 7;
-      if (/next/i.test(m[0]) && diff < 7) diff += 7;
-      const d = new Date(today); d.setDate(d.getDate() + diff);
-      return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() };
-    }
-
-    m = text.match(/\b(?:by\s+)?end\s+of\s+(?:the\s+)?week\b/i);
-    if (m) { const d = new Date(today); d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7)); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
-
-    m = text.match(/\b(?:by\s+)?end\s+of\s+(?:the\s+)?month\b/i);
-    if (m) { const d = new Date(today.getFullYear(), today.getMonth() + 1, 0); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
-
-    const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-    const monthPattern = months.join('|');
-    m = text.match(new RegExp(`\\b(?:by\\s+|on\\s+|due\\s+)?(${monthPattern})\\s+(\\d{1,2})(?:st|nd|rd|th)?\\b`, 'i'));
-    if (m) {
-      const month = months.indexOf(m[1].toLowerCase());
-      const day = parseInt(m[2]);
-      let year = today.getFullYear();
-      const candidate = new Date(year, month, day);
-      if (candidate < today) year++;
-      const d = new Date(year, month, day);
-      return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() };
-    }
-
-    return { deadline: null, cleanedText: text };
-  }
-
-  // ============ INIT ============
-  loadTasks();
-  render();
-
-  document.addEventListener('keydown', e => {
-    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
-      e.preventDefault();
-      document.getElementById('quick-input').focus();
-    }
-    if (e.key === 'Escape') {
-      if (editingId) closeEditor();
-      if (isListening) stopListening();
+function flashTask(id) {
+  requestAnimationFrame(() => {
+    const el = taskEl(id);
+    if (el) {
+      el.classList.add('just-updated');
+      setTimeout(() => el.classList.remove('just-updated'), 700);
     }
   });
+}
+
+function removeTaskDom(id) {
+  const t = taskIndex.get(id);
+  const q = t ? t.quadrant : null;
+  const el = taskEl(id);
+  if (el) el.remove();
+  if (q) {
+    const list = document.getElementById(`list-${q}`);
+    const remaining = list.querySelectorAll('.task').length;
+    document.getElementById(`count-${q}`).textContent = remaining;
+    if (remaining === 0) list.innerHTML = '<div class="empty">No tasks yet</div>';
+  }
+  updateStats();
+}
+
+/* ---------- CRUD ---------- */
+function addTask({ title, quadrant, deadline, notes }) {
+  if (!title || !title.trim()) return null;
+  const t = {
+    id: uid(),
+    title: title.trim(),
+    quadrant: quadrant || 4,
+    deadline: deadline || null,
+    notes: notes || '',
+    subtasks: [],
+    done: false,
+    created: Date.now(),
+    doneAt: null
+  };
+  tasks.push(t);
+  taskIndex.set(t.id, t);
+  saveTasks();
+  renderColumn(t.quadrant);
+  updateStats();
+  flashTask(t.id);
+  return t;
+}
+
+function toggleTask(id) {
+  const t = taskIndex.get(id);
+  if (!t) return;
+  t.done = !t.done;
+  t.doneAt = t.done ? new Date().toISOString() : null;
+  saveTasks();
+  updateTaskDom(id);
+}
+
+function deleteTask(id) {
+  const idx = tasks.findIndex(x => x.id === id);
+  if (idx === -1) return;
+  tasks.splice(idx, 1);
+  taskIndex.delete(id);
+  saveTasks();
+  removeTaskDom(id);
+}
+
+function updateTask(id, updates) {
+  const t = taskIndex.get(id);
+  if (!t) return;
+  Object.assign(t, updates);
+  saveTasks();
+  updateTaskDom(id);
+}
+
+/* ---------- quick add ---------- */
+document.getElementById('quick-add').addEventListener('click', quickAdd);
+document.getElementById('quick-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') quickAdd();
+});
+
+function quickAdd() {
+  const input = document.getElementById('quick-input');
+  const deadline = document.getElementById('quick-deadline').value;
+  const quadrant = parseInt(document.getElementById('quick-quadrant').value);
+  const title = input.value.trim();
+  if (!title) return;
+  addTask({ title, quadrant, deadline });
+  input.value = '';
+  document.getElementById('quick-deadline').value = '';
+  input.focus();
+}
+
+/* ---------- click delegation (one listener per column) ---------- */
+document.querySelectorAll('.task-list').forEach(list => {
+  list.addEventListener('click', e => {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+    const { action, id } = target.dataset;
+    if (!id) return;
+    if (action === 'toggle') toggleTask(id);
+    else if (action === 'delete') deleteTask(id);
+    else if (action === 'edit') openEditor(id);
+  });
+});
+
+/* ---------- drag and drop ---------- */
+let draggedId = null;
+
+document.addEventListener('dragstart', e => {
+  if (e.target.classList && e.target.classList.contains('task')) {
+    draggedId = e.target.dataset.id;
+    e.target.classList.add('dragging');
+  }
+});
+
+document.addEventListener('dragend', e => {
+  if (e.target.classList && e.target.classList.contains('task')) {
+    e.target.classList.remove('dragging');
+  }
+  document.querySelectorAll('.column').forEach(q => q.classList.remove('drag-over'));
+});
+
+document.querySelectorAll('.column').forEach(q => {
+  q.addEventListener('dragover', e => {
+    e.preventDefault();
+    q.classList.add('drag-over');
+  });
+  q.addEventListener('dragleave', () => q.classList.remove('drag-over'));
+  q.addEventListener('drop', e => {
+    e.preventDefault();
+    q.classList.remove('drag-over');
+    if (!draggedId) return;
+    const newQuad = parseInt(q.dataset.quadrant);
+    updateTask(draggedId, { quadrant: newQuad });
+    draggedId = null;
+  });
+});
+
+/* ---------- editor modal ---------- */
+function openEditor(id) {
+  const t = taskIndex.get(id);
+  if (!t) return;
+  editingId = id;
+  document.getElementById('edit-title').value = t.title;
+  document.getElementById('edit-quadrant').value = t.quadrant;
+  document.getElementById('edit-deadline').value = t.deadline || '';
+  document.getElementById('edit-notes').value = t.notes || '';
+  renderSubtasks();
+  document.getElementById('modal-overlay').classList.add('active');
+  setTimeout(() => document.getElementById('edit-title').focus(), 50);
+}
+
+function renderSubtasks() {
+  const t = taskIndex.get(editingId);
+  if (!t) return;
+  const container = document.getElementById('edit-subtasks');
+  if (!t.subtasks || t.subtasks.length === 0) { container.innerHTML = ''; return; }
+  container.innerHTML = t.subtasks.map((s, i) => `
+    <div class="subtask${s.done ? ' done' : ''}">
+      <div class="subtask-check" data-action="sub-toggle" data-idx="${i}">✓</div>
+      <div class="subtask-text">${escapeHtml(s.text)}</div>
+      <button class="subtask-remove" data-action="sub-remove" data-idx="${i}">×</button>
+    </div>
+  `).join('');
+}
+
+document.getElementById('edit-subtasks').addEventListener('click', e => {
+  const target = e.target.closest('[data-action]');
+  if (!target) return;
+  const idx = parseInt(target.dataset.idx);
+  if (isNaN(idx)) return;
+  const t = taskIndex.get(editingId);
+  if (!t) return;
+  if (target.dataset.action === 'sub-toggle') t.subtasks[idx].done = !t.subtasks[idx].done;
+  else if (target.dataset.action === 'sub-remove') t.subtasks.splice(idx, 1);
+  saveTasks();
+  renderSubtasks();
+});
+
+document.getElementById('add-subtask-btn').addEventListener('click', addSubtask);
+document.getElementById('new-subtask').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addSubtask();
+});
+
+function addSubtask() {
+  const input = document.getElementById('new-subtask');
+  const text = input.value.trim();
+  if (!text) return;
+  const t = taskIndex.get(editingId);
+  if (!t) return;
+  if (!t.subtasks) t.subtasks = [];
+  t.subtasks.push({ text, done: false });
+  input.value = '';
+  saveTasks();
+  renderSubtasks();
+}
+
+document.getElementById('save-edit').addEventListener('click', () => {
+  const title = document.getElementById('edit-title').value.trim();
+  if (!title) { toast('Title required', 'error'); return; }
+  updateTask(editingId, {
+    title,
+    quadrant: parseInt(document.getElementById('edit-quadrant').value),
+    deadline: document.getElementById('edit-deadline').value || null,
+    notes: document.getElementById('edit-notes').value
+  });
+  closeEditor();
+  toast('Saved', 'success');
+});
+
+document.getElementById('delete-task').addEventListener('click', () => {
+  if (confirm('Delete this task?')) { deleteTask(editingId); closeEditor(); }
+});
+
+document.getElementById('cancel-edit').addEventListener('click', closeEditor);
+document.getElementById('modal-close').addEventListener('click', closeEditor);
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target.id === 'modal-overlay') closeEditor();
+});
+
+function closeEditor() {
+  document.getElementById('modal-overlay').classList.remove('active');
+  editingId = null;
+}
+
+/* ---------- toolbar ---------- */
+document.getElementById('clear-done').addEventListener('click', () => {
+  const count = tasks.filter(t => t.done).length;
+  if (count === 0) { toast('No completed tasks'); return; }
+  if (confirm(`Remove ${count} completed task(s)?`)) {
+    for (let i = tasks.length - 1; i >= 0; i--) {
+      if (tasks[i].done) { taskIndex.delete(tasks[i].id); tasks.splice(i, 1); }
+    }
+    saveTasks();
+    renderAll();
+    toast('Cleared', 'success');
+  }
+});
+
+document.getElementById('export-data').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(tasks, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `priority-tasks-${todayISO()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('import-data').addEventListener('click', () => {
+  document.getElementById('import-file').click();
+});
+
+document.getElementById('import-file').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!Array.isArray(data)) throw new Error('Invalid format');
+      if (confirm(`Import ${data.length} tasks? This replaces existing tasks.`)) {
+        tasks.length = 0;
+        taskIndex.clear();
+        for (const t of data) { tasks.push(t); taskIndex.set(t.id, t); }
+        saveTasks();
+        renderAll();
+        toast('Imported', 'success');
+      }
+    } catch (err) { toast('Import failed: ' + err.message, 'error'); }
+  };
+  reader.readAsText(file);
+});
+
+/* ---------- toast ---------- */
+let toastTimer;
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = 'toast ' + type; }, 2600);
+}
+
+/* ---------- clock + greeting ---------- */
+function updateClock() {
+  const d = new Date();
+  document.getElementById('current-date').textContent = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  document.getElementById('current-time').textContent = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  const h = d.getHours();
+  document.getElementById('time-of-day').textContent = h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
+}
+
+/* ================================================================
+   VOICE MODE — stays open until user taps Stop
+   ================================================================ */
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let isListening = false;
+let keepAlive = false;        // user wants to stay listening
+let commandBuffer = '';       // accumulated final text between processing
+let commandTimer = null;      // debounce processing
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.continuous = true;      // don't auto-stop on silence
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+
+  recognition.onresult = e => {
+    let interim = '';
+    let newFinal = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const transcript = e.results[i][0].transcript;
+      if (e.results[i].isFinal) newFinal += transcript + ' ';
+      else interim += transcript;
+    }
+    const transcriptEl = document.getElementById('voice-transcript');
+    if (newFinal) {
+      commandBuffer += newFinal;
+      transcriptEl.textContent = commandBuffer.trim();
+      transcriptEl.classList.remove('interim');
+      // debounce: process after 900ms of no new finals
+      clearTimeout(commandTimer);
+      commandTimer = setTimeout(flushCommandBuffer, 900);
+    } else if (interim) {
+      transcriptEl.textContent = (commandBuffer + interim).trim();
+      transcriptEl.classList.add('interim');
+    }
+  };
+
+  recognition.onerror = e => {
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+      toast('Mic blocked. Enable mic in browser settings.', 'error');
+      keepAlive = false;
+      stopListening();
+    } else if (e.error === 'no-speech' || e.error === 'aborted') {
+      // silent errors — will auto-restart via onend
+    } else {
+      console.warn('Voice error:', e.error);
+    }
+  };
+
+  recognition.onend = () => {
+    isListening = false;
+    // Auto-restart if user still wants to listen
+    if (keepAlive) {
+      try {
+        recognition.start();
+        isListening = true;
+      } catch (err) {
+        // already starting; ignore
+        setTimeout(() => {
+          if (keepAlive && !isListening) {
+            try { recognition.start(); isListening = true; } catch (e) {}
+          }
+        }, 250);
+      }
+    }
+  };
+} else {
+  document.getElementById('mic-toggle').style.display = 'none';
+}
+
+document.getElementById('mic-toggle').addEventListener('click', toggleListening);
+document.getElementById('voice-stop').addEventListener('click', () => {
+  flushCommandBuffer();
+  stopListening();
+});
+
+function toggleListening() {
+  if (keepAlive) stopListening(); else startListening();
+}
+
+function startListening() {
+  if (!recognition) return;
+  keepAlive = true;
+  commandBuffer = '';
+  try {
+    recognition.start();
+    isListening = true;
+  } catch (e) {
+    // already running
+  }
+  document.getElementById('mic-toggle').classList.add('listening');
+  document.getElementById('voice-feedback').classList.add('active');
+  document.getElementById('voice-label').textContent = 'Listening';
+  document.getElementById('voice-transcript').textContent = 'Speak freely. Tap Stop when done.';
+  document.getElementById('voice-transcript').classList.remove('interim');
+}
+
+function stopListening() {
+  keepAlive = false;
+  isListening = false;
+  if (recognition) { try { recognition.stop(); } catch (e) {} }
+  clearTimeout(commandTimer);
+  document.getElementById('mic-toggle').classList.remove('listening');
+  document.getElementById('voice-feedback').classList.remove('active');
+}
+
+function flushCommandBuffer() {
+  const text = commandBuffer.trim();
+  commandBuffer = '';
+  if (!text) return;
+  processVoiceCommand(text);
+  // Reset display for next command
+  const transcriptEl = document.getElementById('voice-transcript');
+  if (keepAlive) {
+    transcriptEl.textContent = 'Listening for next command...';
+    transcriptEl.classList.add('interim');
+  }
+}
+
+/* ================================================================
+   VOICE NATURAL LANGUAGE PARSING
+   Commands supported:
+   - ADD:    "add [urgent|important] task X [by tomorrow]"
+   - DONE:   "mark X done", "complete X", "X is done"
+   - DELETE: "delete X", "remove X"
+   - MOVE:   "move X to [do|plan|delegate|eliminate|q1..q4]"
+   - PRIO:   "make X urgent", "change X to important"
+   - DATE:   "change X deadline to friday", "set X due tomorrow"
+   - NOTE:   "add note to X: [...]", "note on X is [...]"
+   - RENAME: "rename X to Y"
+   ================================================================ */
+
+const QUAD_KEYWORDS = {
+  1: ['do', 'urgent and important', 'q1', 'quadrant 1', 'first quadrant'],
+  2: ['plan', 'planning', 'important', 'strategic', 'q2', 'quadrant 2', 'second quadrant'],
+  3: ['delegate', 'delegation', 'q3', 'quadrant 3', 'third quadrant'],
+  4: ['eliminate', 'elimination', 'q4', 'quadrant 4', 'fourth quadrant']
+};
+
+function detectQuadrant(text) {
+  const lower = text.toLowerCase();
+  for (const q of [1, 2, 3, 4]) {
+    for (const kw of QUAD_KEYWORDS[q]) {
+      if (new RegExp(`\\b${kw}\\b`, 'i').test(lower)) return q;
+    }
+  }
+  if (/\b(urgent|critical|emergency|asap|crisis|right\s+now)\b/i.test(lower)) return 1;
+  return null;
+}
+
+function processVoiceCommand(rawText) {
+  const text = rawText.trim().replace(/\s+/g, ' ');
+  if (!text) return;
+  const lower = text.toLowerCase().replace(/^(hey priority|priority|okay)[,\s]+/i, '').trim();
+
+  // --- RENAME: rename X to Y ---
+  let m = lower.match(/^rename\s+(.+?)\s+(?:to|as)\s+(.+)$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    const newTitle = capitalize(m[2].trim());
+    updateTask(task.id, { title: newTitle });
+    return toast(`Renamed to: ${newTitle}`, 'success');
+  }
+
+  // --- ADD NOTE: "add note to X: ..." / "note on X is ..." ---
+  m = lower.match(/^(?:add\s+)?note\s+(?:to|on|for)\s+(.+?)[:;,\s-]+(.+)$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    const noteText = capitalize(m[2].trim());
+    const notes = task.notes ? task.notes + '\n' + noteText : noteText;
+    updateTask(task.id, { notes });
+    return toast(`Note added to: ${task.title}`, 'success');
+  }
+
+  // --- MOVE: "move X to [quadrant]" ---
+  m = lower.match(/^(?:move|put)\s+(.+?)\s+(?:to|into)\s+(.+)$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    const targetQuad = detectQuadrant(m[2]);
+    if (!targetQuad) return toast(`Unknown destination: "${m[2]}"`, 'error');
+    updateTask(task.id, { quadrant: targetQuad });
+    const qName = ['', 'Do', 'Plan', 'Delegate', 'Eliminate'][targetQuad];
+    return toast(`Moved to ${qName}: ${task.title}`, 'success');
+  }
+
+  // --- CHANGE PRIORITY: "make X urgent", "change X to plan" ---
+  m = lower.match(/^(?:make|change|mark|set)\s+(.+?)\s+(?:to\s+|as\s+)?(urgent(?:\s+and\s+important)?|important|delegate|eliminate|q[1-4]|quadrant\s*[1-4])$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    const targetQuad = detectQuadrant(m[2]);
+    if (!targetQuad) return toast(`Unknown priority: "${m[2]}"`, 'error');
+    updateTask(task.id, { quadrant: targetQuad });
+    const qName = ['', 'Do', 'Plan', 'Delegate', 'Eliminate'][targetQuad];
+    return toast(`Moved to ${qName}: ${task.title}`, 'success');
+  }
+
+  // --- CHANGE DEADLINE: "change X deadline to friday", "set X due tomorrow" ---
+  m = lower.match(/^(?:change|set|update|move)\s+(.+?)\s+(?:deadline|due\s*date|due|date)\s+(?:to\s+)?(.+)$/i)
+   || lower.match(/^(?:change|set|update)\s+(.+?)\s+(?:to\s+be\s+)?due\s+(.+)$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    const { deadline } = parseDeadline(m[2]);
+    if (!deadline) return toast(`Couldn't parse date: "${m[2]}"`, 'error');
+    updateTask(task.id, { deadline });
+    return toast(`Deadline set: ${task.title} → ${formatDeadline(deadline).text}`, 'success');
+  }
+
+  // "clear deadline on X" / "remove deadline from X"
+  m = lower.match(/^(?:clear|remove)\s+(?:the\s+)?(?:deadline|due\s*date|date)\s+(?:on|from|for)\s+(.+)$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    updateTask(task.id, { deadline: null });
+    return toast(`Deadline cleared: ${task.title}`, 'success');
+  }
+
+  // --- COMPLETE: "mark X done", "X is done" ---
+  m = lower.match(/^(?:mark|complete|finish|check\s*off|check)\s+(.+?)(?:\s+(?:as\s+)?(?:done|complete|completed|finished))?$/i)
+   || lower.match(/^(?:done|completed|finished)\s+(?:with\s+)?(.+)$/i)
+   || lower.match(/^(.+?)\s+(?:is\s+|are\s+)?(?:done|complete|completed|finished)$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    if (!task.done) {
+      task.done = true;
+      task.doneAt = new Date().toISOString();
+      saveTasks();
+      updateTaskDom(task.id);
+      toast(`✓ Completed: ${task.title}`, 'success');
+    } else {
+      toast(`Already done: ${task.title}`);
+    }
+    return;
+  }
+
+  // --- UNCOMPLETE ---
+  m = lower.match(/^(?:uncheck|uncomplete|reopen)\s+(.+)$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    if (task.done) {
+      task.done = false;
+      task.doneAt = null;
+      saveTasks();
+      updateTaskDom(task.id);
+      toast(`Reopened: ${task.title}`, 'success');
+    }
+    return;
+  }
+
+  // --- DELETE: "delete X", "remove X" ---
+  m = lower.match(/^(?:delete|remove|cancel)\s+(?:task\s+)?(.+)$/i);
+  if (m) {
+    const task = findTaskByText(m[1]);
+    if (!task) return toast(`No match for "${m[1]}"`, 'error');
+    const title = task.title;
+    deleteTask(task.id);
+    return toast(`Deleted: ${title}`, 'success');
+  }
+
+  // --- ADD (default path) ---
+  let body = lower.replace(/^(?:add|create|new)\s+(?:(?:a|an)\s+)?(?:task\s+|item\s+|to-?do\s+|todo\s+)?/i, '');
+  body = body.replace(/^(?:task|item|to-?do|todo)\s+/i, '');
+
+  // Detect quadrant keywords before stripping
+  let quadrant = 4;
+  const q1Match = /\b(urgent(?:\s+and\s+important)?|critical|emergency|asap|right now|crisis)\b/i;
+  const q2Match = /\b(important|strategic|plan(?:ning)?|long[- ]?term|growth)\b/i;
+  const q3Match = /\b(quick|interrupt(?:ion)?|delegate)\b/i;
+
+  if (q1Match.test(body)) quadrant = 1;
+  else if (q2Match.test(body)) quadrant = 2;
+  else if (q3Match.test(body)) quadrant = 3;
+
+  body = body.replace(q1Match, '').replace(q2Match, '').replace(q3Match, '')
+             .replace(/\b(?:priority|priority level)\s*\d+\b/i, '').trim();
+
+  const qMatch = body.match(/\b(?:q(?:uadrant)?\s*)([1-4])\b/i);
+  if (qMatch) { quadrant = parseInt(qMatch[1]); body = body.replace(qMatch[0], '').trim(); }
+
+  const parsed = parseDeadline(body);
+  body = parsed.cleanedText.replace(/\s+/g, ' ').replace(/^[,.\s]+|[,.\s]+$/g, '').trim();
+
+  if (!body) return toast('Could not understand', 'error');
+
+  body = capitalize(body);
+  const t = addTask({ title: body, quadrant, deadline: parsed.deadline });
+  if (t) {
+    const qName = ['', 'Do', 'Plan', 'Delegate', 'Eliminate'][quadrant];
+    const dText = parsed.deadline ? ` · ${formatDeadline(parsed.deadline).text.toLowerCase()}` : '';
+    toast(`+ ${qName}: ${body}${dText}`, 'success');
+  }
+}
+
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function findTaskByText(query) {
+  const q = query.toLowerCase().trim().replace(/\s+/g, ' ');
+  if (!q) return null;
+  // Prefer open tasks
+  const open = [], done = [];
+  for (const t of tasks) (t.done ? done : open).push(t);
+  const all = [...open, ...done];
+
+  // Exact
+  let match = all.find(t => t.title.toLowerCase() === q);
+  if (match) return match;
+  // Contains
+  match = all.find(t => t.title.toLowerCase().includes(q));
+  if (match) return match;
+  // Word overlap
+  const qWords = q.split(/\s+/).filter(w => w.length > 2);
+  if (qWords.length === 0) return null;
+  let best = null, bestScore = 0;
+  for (const t of all) {
+    const tLower = t.title.toLowerCase();
+    let score = 0;
+    for (const w of qWords) if (tLower.includes(w)) score++;
+    if (score > bestScore) { best = t; bestScore = score; }
+  }
+  return bestScore >= Math.ceil(qWords.length / 2) ? best : null;
+}
+
+function parseDeadline(text) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const toISO = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+  let m = text.match(/\b(?:by\s+|on\s+|due\s+)?today\b/i);
+  if (m) return { deadline: toISO(today), cleanedText: text.replace(m[0], '').trim() };
+
+  m = text.match(/\b(?:by\s+|on\s+|due\s+)?tomorrow\b/i);
+  if (m) { const d = new Date(today); d.setDate(d.getDate() + 1); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+  m = text.match(/\bin\s+(\d+)\s+days?\b/i);
+  if (m) { const d = new Date(today); d.setDate(d.getDate() + parseInt(m[1])); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+  m = text.match(/\bnext\s+week\b/i);
+  if (m) { const d = new Date(today); d.setDate(d.getDate() + 7); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+  const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  m = text.match(/\b(?:by\s+|on\s+|this\s+|next\s+|due\s+)?(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\b/i);
+  if (m) {
+    const targetDay = days.indexOf(m[1].toLowerCase());
+    const currentDay = today.getDay();
+    let diff = targetDay - currentDay;
+    if (diff <= 0) diff += 7;
+    if (/next/i.test(m[0]) && diff < 7) diff += 7;
+    const d = new Date(today); d.setDate(d.getDate() + diff);
+    return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() };
+  }
+
+  m = text.match(/\b(?:by\s+)?end\s+of\s+(?:the\s+)?week\b/i);
+  if (m) { const d = new Date(today); d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7)); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+  m = text.match(/\b(?:by\s+)?end\s+of\s+(?:the\s+)?month\b/i);
+  if (m) { const d = new Date(today.getFullYear(), today.getMonth() + 1, 0); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+  const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+  const monthPattern = months.join('|');
+  m = text.match(new RegExp(`\\b(?:by\\s+|on\\s+|due\\s+)?(${monthPattern})\\s+(\\d{1,2})(?:st|nd|rd|th)?\\b`, 'i'));
+  if (m) {
+    const month = months.indexOf(m[1].toLowerCase());
+    const day = parseInt(m[2]);
+    let year = today.getFullYear();
+    const candidate = new Date(year, month, day);
+    if (candidate < today) year++;
+    const d = new Date(year, month, day);
+    return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() };
+  }
+
+  return { deadline: null, cleanedText: text };
+}
+
+/* ---------- init ---------- */
+loadTasks();
+renderAll();
+updateClock();
+setInterval(updateClock, 60000);
+
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    document.getElementById('quick-input').focus();
+  }
+  if (e.key === 'Escape') {
+    if (editingId) closeEditor();
+    if (keepAlive) stopListening();
+  }
+});
 </script>
 
 
