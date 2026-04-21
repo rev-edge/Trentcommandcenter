@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)file:///Users/tsconnely/Downloads/priority_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Priority · Daily Command</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./Priority · Daily Command_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --surface-soft: #fafbfd;
+    --border: #eef0f5;
+    --border-hover: #e2e5ed;
+    --text: #1a1d29;
+    --text-dim: #6b7280;
+    --text-faint: #9ca3af;
+    --accent: #4f46e5;
+    --accent-soft: #eef2ff;
+
+    --q1-bg: #fef2f2;
+    --q1-accent: #ef4444;
+    --q1-soft: #fee2e2;
+
+    --q2-bg: #ecfdf5;
+    --q2-accent: #10b981;
+    --q2-soft: #d1fae5;
+
+    --q3-bg: #fffbeb;
+    --q3-accent: #f59e0b;
+    --q3-soft: #fef3c7;
+
+    --q4-bg: #eff6ff;
+    --q4-accent: #3b82f6;
+    --q4-soft: #dbeafe;
+
+    --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.04);
+    --shadow-md: 0 4px 6px rgba(16, 24, 40, 0.04), 0 2px 4px rgba(16, 24, 40, 0.03);
+    --shadow-lg: 0 12px 24px rgba(16, 24, 40, 0.06), 0 4px 8px rgba(16, 24, 40, 0.03);
+
+    --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 32px 40px 120px;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .greeting {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .greeting .hello {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  .greeting h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .greeting h1 .count {
+    color: var(--accent);
+  }
+
+  .greeting .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  .date-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .date-chip .date {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .date-chip .time {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  /* ============ STAT PILLS ============ */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .stat-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .stat-pill:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .stat-icon.q1 { background: var(--q1-bg); color: var(--q1-accent); }
+  .stat-icon.q2 { background: var(--q2-bg); color: var(--q2-accent); }
+  .stat-icon.q3 { background: var(--q3-bg); color: var(--q3-accent); }
+  .stat-icon.q4 { background: var(--q4-bg); color: var(--q4-accent); }
+
+  .stat-body { flex: 1; min-width: 0; }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  /* ============ INPUT BAR ============ */
+  .input-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 6px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .input-card:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+
+  .input-card input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 12px 14px;
+    font-family: var(--font);
+    font-size: 14px;
+    outline: none;
+  }
+
+  .input-card input[type="text"]::placeholder {
+    color: var(--text-faint);
+  }
+
+  .input-card input[type="date"] {
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    outline: none;
+  }
+
+  .input-card select {
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .mic-btn {
+    background: var(--surface-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .mic-btn:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  .mic-btn.listening {
+    background: var(--q1-accent);
+    color: white;
+    border-color: var(--q1-accent);
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  }
+
+  .add-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 11px 22px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: filter 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .add-btn:hover { filter: brightness(1.1); }
+  .add-btn:active { transform: scale(0.97); }
+
+  /* ============ BOARD ============ */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  .column {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 18px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s;
+  }
+
+  .column.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .column-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .column-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .column-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .column.q1 .column-dot { background: var(--q1-accent); }
+  .column.q2 .column-dot { background: var(--q2-accent); }
+  .column.q3 .column-dot { background: var(--q3-accent); }
+  .column.q4 .column-dot { background: var(--q4-accent); }
+
+  .column-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .column-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .column-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: var(--bg);
+    padding: 3px 10px;
+    border-radius: 100px;
+    min-width: 26px;
+    text-align: center;
+  }
+
+  .column.q1 .column-count { background: var(--q1-bg); color: var(--q1-accent); }
+  .column.q2 .column-count { background: var(--q2-bg); color: var(--q2-accent); }
+  .column.q3 .column-count { background: var(--q3-bg); color: var(--q3-accent); }
+  .column.q4 .column-count { background: var(--q4-bg); color: var(--q4-accent); }
+
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 600px;
+    padding: 2px;
+    margin: -2px;
+  }
+
+  .task-list::-webkit-scrollbar { width: 6px; }
+  .task-list::-webkit-scrollbar-thumb {
+    background: var(--border-hover);
+    border-radius: 3px;
+  }
+
+  .task-list::-webkit-scrollbar-thumb:hover {
+    background: var(--text-faint);
+  }
+
+  /* ============ TASK CARD ============ */
+  .task {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    cursor: grab;
+    transition: all 0.15s;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .task::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    transition: width 0.15s;
+  }
+
+  .column.q1 .task::before { background: var(--q1-accent); }
+  .column.q2 .task::before { background: var(--q2-accent); }
+  .column.q3 .task::before { background: var(--q3-accent); }
+  .column.q4 .task::before { background: var(--q4-accent); }
+
+  .task:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .task.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+    transform: rotate(2deg);
+  }
+
+  .task.done { opacity: 0.55; }
+  .task.done .task-title {
+    text-decoration: line-through;
+    color: var(--text-dim);
+  }
+
+  .task-top-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .task-check {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border-hover);
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: transparent;
+    transition: all 0.15s;
+    background: var(--surface);
+  }
+
+  .task-check:hover { border-color: var(--accent); }
+
+  .task.done .task-check {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .column.q1 .task.done .task-check { background: var(--q1-accent); border-color: var(--q1-accent); }
+  .column.q2 .task.done .task-check { background: var(--q2-accent); border-color: var(--q2-accent); }
+  .column.q3 .task.done .task-check { background: var(--q3-accent); border-color: var(--q3-accent); }
+  .column.q4 .task.done .task-check { background: var(--q4-accent); border-color: var(--q4-accent); }
+
+  .task-body { flex: 1; min-width: 0; }
+
+  .task-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+    word-wrap: break-word;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+  }
+
+  .task-delete {
+    background: transparent;
+    border: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    font-size: 18px;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .task:hover .task-delete { opacity: 1; }
+  .task-delete:hover {
+    background: var(--q1-bg);
+    color: var(--q1-accent);
+  }
+
+  .task-meta {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .task-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 100px;
+    background: var(--bg);
+    color: var(--text-dim);
+  }
+
+  .task-tag.overdue {
+    background: var(--q1-bg);
+    color: var(--q1-accent);
+  }
+
+  .task-tag.soon {
+    background: var(--q3-bg);
+    color: var(--q3-accent);
+  }
+
+  .task-tag.notes {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .empty {
+    font-size: 13px;
+    color: var(--text-faint);
+    text-align: center;
+    padding: 28px 16px;
+    font-weight: 500;
+  }
+
+  .empty::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 10px;
+    background: var(--bg);
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+
+  /* ============ VOICE FEEDBACK ============ */
+  .voice-feedback {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 50;
+    box-shadow: var(--shadow-lg);
+    max-width: 90vw;
+    min-width: 340px;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .voice-feedback.active {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  .voice-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--q1-accent);
+    animation: pulse-dot 1s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .voice-text { flex: 1; min-width: 0; }
+
+  .voice-text .label {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+
+  .voice-transcript {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .voice-close {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 7px 14px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+
+  .voice-close:hover {
+    background: var(--q1-bg);
+    color: var(--q1-accent);
+    border-color: var(--q1-bg);
+  }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-40px);
+    background: var(--text);
+    color: white;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 100px;
+    z-index: 300;
+    opacity: 0;
+    transition: all 0.3s;
+    box-shadow: var(--shadow-lg);
+    max-width: 90vw;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .toast.success { background: var(--q2-accent); }
+  .toast.error { background: var(--q1-accent); }
+
+  /* ============ MODAL ============ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 29, 41, 0.4);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    width: 100%;
+    max-width: 560px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(16, 24, 40, 0.15);
+  }
+
+  .modal-head {
+    padding: 22px 26px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-head h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .modal-close {
+    background: var(--bg);
+    border: none;
+    color: var(--text-dim);
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .modal-close:hover {
+    background: var(--q1-bg);
+    color: var(--q1-accent);
+  }
+
+  .modal-body { padding: 4px 26px 20px; }
+
+  .field { margin-bottom: 18px; }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .field input[type="text"],
+  .field input[type="date"],
+  .field textarea,
+  .field select {
+    width: 100%;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 11px 13px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: all 0.15s;
+  }
+
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: var(--accent);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .field textarea {
+    min-height: 80px;
+    resize: vertical;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .subtasks {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .subtask {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+  }
+
+  .subtask-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border-hover);
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: transparent;
+    background: white;
+  }
+
+  .subtask.done .subtask-check {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .subtask-text { flex: 1; font-size: 13px; font-weight: 500; }
+
+  .subtask.done .subtask-text {
+    text-decoration: line-through;
+    color: var(--text-dim);
+  }
+
+  .subtask-remove {
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    font-size: 16px;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .subtask-remove:hover { background: var(--q1-bg); color: var(--q1-accent); }
+
+  .add-subtask { display: flex; gap: 8px; }
+
+  .add-subtask input { flex: 1; }
+
+  .add-subtask button {
+    background: var(--accent-soft);
+    border: 1px solid transparent;
+    color: var(--accent);
+    padding: 10px 16px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+
+  .add-subtask button:hover {
+    background: var(--accent);
+    color: white;
+  }
+
+  .modal-foot {
+    padding: 18px 26px 22px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 10px 18px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.15s;
+  }
+
+  .btn:hover {
+    background: var(--bg);
+    border-color: var(--border-hover);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .btn-danger {
+    color: var(--q1-accent);
+    border-color: var(--border);
+  }
+
+  .btn-danger:hover {
+    background: var(--q1-bg);
+    border-color: var(--q1-accent);
+  }
+
+  /* ============ TOOLBAR ============ */
+  .toolbar {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .voice-help {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  .voice-help code {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-family: var(--font);
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .toolbar-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .toolbar-actions button {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 8px 14px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s;
+  }
+
+  .toolbar-actions button:hover {
+    color: var(--text);
+    background: var(--surface);
+    border-color: var(--border-hover);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1100px) {
+    .board {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .app { padding: 20px 16px 120px; }
+    .greeting h1 { font-size: 26px; }
+    .board {
+      grid-template-columns: 1fr;
+    }
+    .input-card {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .input-card input[type="text"],
+    .input-card input[type="date"],
+    .input-card select,
+    .add-btn,
+    .mic-btn {
+      width: 100%;
+      justify-content: center;
+    }
+    .column { min-height: 200px; }
+    .column .task-list { max-height: 400px; }
+    header { flex-direction: column; align-items: flex-start; }
+    .date-chip { align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="greeting">
+      <div class="hello">Good <span id="time-of-day">afternoon</span>, Trent 👋</div>
+      <h1>You have <span class="count" id="count-hero">a fresh start</span> today</h1>
+      <div class="subtitle" id="subtitle">Add your first task to get going.</div>
+    </div>
+    <div class="date-chip">
+      <div class="date" id="current-date">Tuesday, April 21</div>
+      <div class="time" id="current-time">3:37 PM</div>
+    </div>
+  </header>
+
+  <div class="stat-row">
+    <div class="stat-pill">
+      <div class="stat-icon q1">🔥</div>
+      <div class="stat-body">
+        <div class="stat-label">Do Now</div>
+        <div class="stat-value" id="stat-q1">0</div>
+      </div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-icon q2">🌱</div>
+      <div class="stat-body">
+        <div class="stat-label">Plan</div>
+        <div class="stat-value" id="stat-q2">0</div>
+      </div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-icon q3">⚡</div>
+      <div class="stat-body">
+        <div class="stat-label">Delegate</div>
+        <div class="stat-value" id="stat-q3">0</div>
+      </div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-icon q4">💭</div>
+      <div class="stat-body">
+        <div class="stat-label">Completed today</div>
+        <div class="stat-value" id="stat-done">0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-card">
+    <input type="text" id="quick-input" placeholder="What needs to happen today?">
+    <input type="date" id="quick-deadline" title="Deadline">
+    <select id="quick-quadrant" title="Priority quadrant">
+      <option value="1">🔥 Do</option>
+      <option value="2">🌱 Plan</option>
+      <option value="3">⚡ Delegate</option>
+      <option value="4" selected="">💭 Eliminate</option>
+    </select>
+    <button id="mic-toggle" class="mic-btn" title="Voice input">🎙</button>
+    <button id="quick-add" class="add-btn">+ Add task</button>
+  </div>
+
+  <div class="board">
+    <div class="column q1" data-quadrant="1">
+      <div class="column-head">
+        <div class="column-title-group">
+          <div class="column-dot"></div>
+          <div>
+            <div class="column-title">Do</div>
+            <div class="column-subtitle">Urgent + Important</div>
+          </div>
+        </div>
+        <div class="column-count" id="count-1">0</div>
+      </div>
+      <div class="task-list" id="list-1"><div class="empty">No tasks yet</div></div>
+    </div>
+
+    <div class="column q2" data-quadrant="2">
+      <div class="column-head">
+        <div class="column-title-group">
+          <div class="column-dot"></div>
+          <div>
+            <div class="column-title">Plan</div>
+            <div class="column-subtitle">Important, not urgent</div>
+          </div>
+        </div>
+        <div class="column-count" id="count-2">0</div>
+      </div>
+      <div class="task-list" id="list-2"><div class="empty">No tasks yet</div></div>
+    </div>
+
+    <div class="column q3" data-quadrant="3">
+      <div class="column-head">
+        <div class="column-title-group">
+          <div class="column-dot"></div>
+          <div>
+            <div class="column-title">Delegate</div>
+            <div class="column-subtitle">Urgent, not important</div>
+          </div>
+        </div>
+        <div class="column-count" id="count-3">0</div>
+      </div>
+      <div class="task-list" id="list-3"><div class="empty">No tasks yet</div></div>
+    </div>
+
+    <div class="column q4" data-quadrant="4">
+      <div class="column-head">
+        <div class="column-title-group">
+          <div class="column-dot"></div>
+          <div>
+            <div class="column-title">Eliminate</div>
+            <div class="column-subtitle">Neither urgent nor important</div>
+          </div>
+        </div>
+        <div class="column-count" id="count-4">0</div>
+      </div>
+      <div class="task-list" id="list-4"><div class="empty">No tasks yet</div></div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="voice-help">
+      Try voice: <code>add urgent call Brady tomorrow</code> or <code>mark call Brady done</code>
+    </div>
+    <div class="toolbar-actions">
+      <button id="clear-done">Clear completed</button>
+      <button id="export-data">Export</button>
+      <button id="import-data">Import</button>
+      <input type="file" id="import-file" accept=".json" style="display:none">
+    </div>
+  </div>
+</div>
+
+<!-- Voice feedback -->
+<div class="voice-feedback" id="voice-feedback">
+  <div class="voice-indicator"></div>
+  <div class="voice-text">
+    <div class="label">Listening...</div>
+    <div class="voice-transcript" id="voice-transcript">Say something</div>
+  </div>
+  <button class="voice-close" id="voice-stop">Stop</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Edit task</h2>
+      <button class="modal-close" id="modal-close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="edit-title">
+      </div>
+      <div class="field">
+        <label>Quadrant</label>
+        <select id="edit-quadrant">
+          <option value="1">🔥 Do — Urgent + Important</option>
+          <option value="2">🌱 Plan — Important, not urgent</option>
+          <option value="3">⚡ Delegate — Urgent, not important</option>
+          <option value="4">💭 Eliminate — Neither</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Deadline</label>
+        <input type="date" id="edit-deadline">
+      </div>
+      <div class="field">
+        <label>Notes &amp; context</label>
+        <textarea id="edit-notes" placeholder="Add context, links, references..."></textarea>
+      </div>
+      <div class="field">
+        <label>Subtasks</label>
+        <div class="subtasks" id="edit-subtasks"></div>
+        <div class="add-subtask">
+          <input type="text" id="new-subtask" placeholder="Add subtask...">
+          <button id="add-subtask-btn">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-danger" id="delete-task">Delete</button>
+      <div style="display:flex; gap:8px;">
+        <button class="btn" id="cancel-edit">Cancel</button>
+        <button class="btn btn-primary" id="save-edit">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============ STATE ============
+  const STORAGE_KEY = 'priority_tasks_v1';
+  let tasks = [];
+  let editingId = null;
+
+  // ============ PERSISTENCE ============
+  function loadTasks() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      tasks = raw ? JSON.parse(raw) : [];
+    } catch (e) { tasks = []; }
+  }
+
+  function saveTasks() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); }
+    catch (e) { toast('Storage error: ' + e.message, 'error'); }
+  }
+
+  function uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  // ============ HELPERS ============
+  function todayISO() {
+    const d = new Date();
+    const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function formatDeadline(iso) {
+    if (!iso) return null;
+    const today = new Date(todayISO());
+    const target = new Date(iso);
+    const diff = Math.round((target - today) / 86400000);
+    if (diff < 0) return { text: `${Math.abs(diff)}d overdue`, cls: 'overdue' };
+    if (diff === 0) return { text: 'Today', cls: 'soon' };
+    if (diff === 1) return { text: 'Tomorrow', cls: 'soon' };
+    if (diff <= 3) return { text: `In ${diff} days`, cls: 'soon' };
+    const opts = { month: 'short', day: 'numeric' };
+    return { text: target.toLocaleDateString('en-US', opts), cls: '' };
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  // ============ RENDER ============
+  function render() {
+    for (let q = 1; q <= 4; q++) {
+      const list = document.getElementById(`list-${q}`);
+      const quadTasks = tasks.filter(t => t.quadrant === q);
+      document.getElementById(`count-${q}`).textContent = quadTasks.length;
+
+      if (quadTasks.length === 0) {
+        list.innerHTML = '<div class="empty">No tasks yet</div>';
+        continue;
+      }
+
+      quadTasks.sort((a, b) => {
+        if (a.done !== b.done) return a.done ? 1 : -1;
+        if (a.deadline && b.deadline) return a.deadline.localeCompare(b.deadline);
+        if (a.deadline) return -1;
+        if (b.deadline) return 1;
+        return b.created - a.created;
+      });
+
+      list.innerHTML = quadTasks.map(t => {
+        const dl = formatDeadline(t.deadline);
+        const subCount = t.subtasks ? t.subtasks.length : 0;
+        const subDone = t.subtasks ? t.subtasks.filter(s => s.done).length : 0;
+        return `
+          <div class="task ${t.done ? 'done' : ''}" draggable="true" data-id="${t.id}">
+            <div class="task-top-row">
+              <div class="task-check" data-action="toggle" data-id="${t.id}">✓</div>
+              <div class="task-body">
+                <div class="task-title" data-action="edit" data-id="${t.id}">${escapeHtml(t.title)}</div>
+              </div>
+              <button class="task-delete" data-action="delete" data-id="${t.id}" title="Delete">×</button>
+            </div>
+            ${(dl || subCount > 0 || t.notes) ? `
+              <div class="task-meta">
+                ${dl ? `<span class="task-tag ${dl.cls}">⏱ ${dl.text}</span>` : ''}
+                ${subCount > 0 ? `<span class="task-tag">☰ ${subDone}/${subCount}</span>` : ''}
+                ${t.notes ? `<span class="task-tag notes">📝 Note</span>` : ''}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+    updateStats();
+  }
+
+  function updateStats() {
+    const today = todayISO();
+    const openQ1 = tasks.filter(t => !t.done && t.quadrant === 1).length;
+    const openQ2 = tasks.filter(t => !t.done && t.quadrant === 2).length;
+    const openQ3 = tasks.filter(t => !t.done && t.quadrant === 3).length;
+    const doneToday = tasks.filter(t => t.done && t.doneAt && t.doneAt.slice(0, 10) === today).length;
+    const totalOpen = tasks.filter(t => !t.done).length;
+
+    document.getElementById('stat-q1').textContent = openQ1;
+    document.getElementById('stat-q2').textContent = openQ2;
+    document.getElementById('stat-q3').textContent = openQ3;
+    document.getElementById('stat-done').textContent = doneToday;
+
+    const heroEl = document.getElementById('count-hero');
+    const subtitleEl = document.getElementById('subtitle');
+
+    if (totalOpen === 0 && doneToday > 0) {
+      heroEl.textContent = 'a clean slate';
+      subtitleEl.textContent = `You've completed ${doneToday} task${doneToday === 1 ? '' : 's'} today. Nice work.`;
+    } else if (totalOpen === 0) {
+      heroEl.textContent = 'a fresh start';
+      subtitleEl.textContent = 'Add your first task to get going.';
+    } else {
+      heroEl.textContent = `${totalOpen} task${totalOpen === 1 ? '' : 's'}`;
+      if (openQ1 > 0) subtitleEl.textContent = `${openQ1} item${openQ1 === 1 ? '' : 's'} need your attention now.`;
+      else if (openQ2 > 0) subtitleEl.textContent = 'Focus on what matters. No fires today.';
+      else subtitleEl.textContent = "Let's make it count.";
+    }
+  }
+
+  // ============ CRUD ============
+  function addTask({ title, quadrant, deadline, notes }) {
+    if (!title || !title.trim()) return null;
+    const t = {
+      id: uid(),
+      title: title.trim(),
+      quadrant: quadrant || 4,
+      deadline: deadline || null,
+      notes: notes || '',
+      subtasks: [],
+      done: false,
+      created: Date.now(),
+      doneAt: null
+    };
+    tasks.push(t);
+    saveTasks();
+    render();
+    return t;
+  }
+
+  function toggleTask(id) {
+    const t = tasks.find(x => x.id === id);
+    if (!t) return;
+    t.done = !t.done;
+    t.doneAt = t.done ? new Date().toISOString() : null;
+    saveTasks();
+    render();
+  }
+
+  function deleteTask(id) {
+    tasks = tasks.filter(t => t.id !== id);
+    saveTasks();
+    render();
+  }
+
+  function updateTask(id, updates) {
+    const t = tasks.find(x => x.id === id);
+    if (!t) return;
+    Object.assign(t, updates);
+    saveTasks();
+    render();
+  }
+
+  // ============ QUICK ADD ============
+  document.getElementById('quick-add').addEventListener('click', quickAdd);
+  document.getElementById('quick-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') quickAdd();
+  });
+
+  function quickAdd() {
+    const input = document.getElementById('quick-input');
+    const deadline = document.getElementById('quick-deadline').value;
+    const quadrant = parseInt(document.getElementById('quick-quadrant').value);
+    const title = input.value.trim();
+    if (!title) return;
+    addTask({ title, quadrant, deadline });
+    input.value = '';
+    document.getElementById('quick-deadline').value = '';
+    input.focus();
+  }
+
+  // ============ TASK INTERACTIONS ============
+  document.querySelectorAll('.task-list').forEach(list => {
+    list.addEventListener('click', e => {
+      const action = e.target.dataset.action;
+      const id = e.target.dataset.id;
+      if (!action || !id) return;
+      if (action === 'toggle') toggleTask(id);
+      else if (action === 'delete') deleteTask(id);
+      else if (action === 'edit') openEditor(id);
+    });
+  });
+
+  // ============ DRAG AND DROP ============
+  let draggedId = null;
+
+  document.addEventListener('dragstart', e => {
+    if (e.target.classList && e.target.classList.contains('task')) {
+      draggedId = e.target.dataset.id;
+      e.target.classList.add('dragging');
+    }
+  });
+
+  document.addEventListener('dragend', e => {
+    if (e.target.classList && e.target.classList.contains('task')) {
+      e.target.classList.remove('dragging');
+    }
+    document.querySelectorAll('.column').forEach(q => q.classList.remove('drag-over'));
+  });
+
+  document.querySelectorAll('.column').forEach(q => {
+    q.addEventListener('dragover', e => {
+      e.preventDefault();
+      q.classList.add('drag-over');
+    });
+    q.addEventListener('dragleave', () => {
+      q.classList.remove('drag-over');
+    });
+    q.addEventListener('drop', e => {
+      e.preventDefault();
+      q.classList.remove('drag-over');
+      if (!draggedId) return;
+      const newQuad = parseInt(q.dataset.quadrant);
+      updateTask(draggedId, { quadrant: newQuad });
+      draggedId = null;
+    });
+  });
+
+  // ============ EDITOR ============
+  function openEditor(id) {
+    const t = tasks.find(x => x.id === id);
+    if (!t) return;
+    editingId = id;
+    document.getElementById('edit-title').value = t.title;
+    document.getElementById('edit-quadrant').value = t.quadrant;
+    document.getElementById('edit-deadline').value = t.deadline || '';
+    document.getElementById('edit-notes').value = t.notes || '';
+    renderSubtasks();
+    document.getElementById('modal-overlay').classList.add('active');
+    setTimeout(() => document.getElementById('edit-title').focus(), 50);
+  }
+
+  function renderSubtasks() {
+    const t = tasks.find(x => x.id === editingId);
+    if (!t) return;
+    const container = document.getElementById('edit-subtasks');
+    if (!t.subtasks || t.subtasks.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+    container.innerHTML = t.subtasks.map((s, i) => `
+      <div class="subtask ${s.done ? 'done' : ''}">
+        <div class="subtask-check" data-action="sub-toggle" data-idx="${i}">✓</div>
+        <div class="subtask-text">${escapeHtml(s.text)}</div>
+        <button class="subtask-remove" data-action="sub-remove" data-idx="${i}">×</button>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('edit-subtasks').addEventListener('click', e => {
+    const action = e.target.dataset.action;
+    const idx = parseInt(e.target.dataset.idx);
+    if (isNaN(idx)) return;
+    const t = tasks.find(x => x.id === editingId);
+    if (!t) return;
+    if (action === 'sub-toggle') t.subtasks[idx].done = !t.subtasks[idx].done;
+    else if (action === 'sub-remove') t.subtasks.splice(idx, 1);
+    saveTasks();
+    renderSubtasks();
+  });
+
+  document.getElementById('add-subtask-btn').addEventListener('click', addSubtask);
+  document.getElementById('new-subtask').addEventListener('keydown', e => {
+    if (e.key === 'Enter') addSubtask();
+  });
+
+  function addSubtask() {
+    const input = document.getElementById('new-subtask');
+    const text = input.value.trim();
+    if (!text) return;
+    const t = tasks.find(x => x.id === editingId);
+    if (!t) return;
+    if (!t.subtasks) t.subtasks = [];
+    t.subtasks.push({ text, done: false });
+    input.value = '';
+    saveTasks();
+    renderSubtasks();
+  }
+
+  document.getElementById('save-edit').addEventListener('click', () => {
+    const title = document.getElementById('edit-title').value.trim();
+    if (!title) { toast('Title required', 'error'); return; }
+    updateTask(editingId, {
+      title,
+      quadrant: parseInt(document.getElementById('edit-quadrant').value),
+      deadline: document.getElementById('edit-deadline').value || null,
+      notes: document.getElementById('edit-notes').value
+    });
+    closeEditor();
+    toast('Saved', 'success');
+  });
+
+  document.getElementById('delete-task').addEventListener('click', () => {
+    if (confirm('Delete this task?')) {
+      deleteTask(editingId);
+      closeEditor();
+    }
+  });
+
+  document.getElementById('cancel-edit').addEventListener('click', closeEditor);
+  document.getElementById('modal-close').addEventListener('click', closeEditor);
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target.id === 'modal-overlay') closeEditor();
+  });
+
+  function closeEditor() {
+    document.getElementById('modal-overlay').classList.remove('active');
+    editingId = null;
+  }
+
+  // ============ TOOLBAR ============
+  document.getElementById('clear-done').addEventListener('click', () => {
+    const count = tasks.filter(t => t.done).length;
+    if (count === 0) { toast('No completed tasks'); return; }
+    if (confirm(`Remove ${count} completed task(s)?`)) {
+      tasks = tasks.filter(t => !t.done);
+      saveTasks();
+      render();
+      toast('Cleared', 'success');
+    }
+  });
+
+  document.getElementById('export-data').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(tasks, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `priority-tasks-${todayISO()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('import-data').addEventListener('click', () => {
+    document.getElementById('import-file').click();
+  });
+
+  document.getElementById('import-file').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (!Array.isArray(data)) throw new Error('Invalid format');
+        if (confirm(`Import ${data.length} tasks? This will replace existing tasks.`)) {
+          tasks = data;
+          saveTasks();
+          render();
+          toast('Imported', 'success');
+        }
+      } catch (err) {
+        toast('Import failed: ' + err.message, 'error');
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  // ============ TOAST ============
+  let toastTimer;
+  function toast(msg, type = '') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'toast show ' + type;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      el.className = 'toast ' + type;
+    }, 2800);
+  }
+
+  // ============ CLOCK + GREETING ============
+  function updateClock() {
+    const d = new Date();
+    document.getElementById('current-date').textContent = d.toLocaleDateString('en-US', {
+      weekday: 'long', month: 'long', day: 'numeric'
+    });
+    document.getElementById('current-time').textContent = d.toLocaleTimeString('en-US', {
+      hour: 'numeric', minute: '2-digit'
+    });
+    const h = d.getHours();
+    let tod = 'morning';
+    if (h >= 12 && h < 17) tod = 'afternoon';
+    else if (h >= 17) tod = 'evening';
+    document.getElementById('time-of-day').textContent = tod;
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // ============ VOICE INPUT ============
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let recognition = null;
+  let isListening = false;
+
+  if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = e => {
+      let interim = '', final = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const transcript = e.results[i][0].transcript;
+        if (e.results[i].isFinal) final += transcript;
+        else interim += transcript;
+      }
+      document.getElementById('voice-transcript').textContent = final || interim || '...';
+      if (final) processVoiceCommand(final.trim());
+    };
+
+    recognition.onerror = e => {
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+        toast('Microphone blocked. Enable mic in browser settings.', 'error');
+      } else if (e.error !== 'no-speech' && e.error !== 'aborted') {
+        toast('Voice error: ' + e.error, 'error');
+      }
+      stopListening();
+    };
+
+    recognition.onend = () => {
+      if (isListening) {
+        try { recognition.start(); } catch (err) { stopListening(); }
+      }
+    };
+  } else {
+    document.getElementById('mic-toggle').style.display = 'none';
+  }
+
+  document.getElementById('mic-toggle').addEventListener('click', toggleListening);
+  document.getElementById('voice-stop').addEventListener('click', stopListening);
+
+  function toggleListening() {
+    if (isListening) stopListening(); else startListening();
+  }
+
+  function startListening() {
+    if (!recognition) return;
+    try {
+      recognition.start();
+      isListening = true;
+      document.getElementById('mic-toggle').classList.add('listening');
+      document.getElementById('voice-feedback').classList.add('active');
+      document.getElementById('voice-transcript').textContent = 'Say something...';
+    } catch (e) {
+      toast('Could not start mic: ' + e.message, 'error');
+    }
+  }
+
+  function stopListening() {
+    isListening = false;
+    if (recognition) { try { recognition.stop(); } catch (e) {} }
+    document.getElementById('mic-toggle').classList.remove('listening');
+    document.getElementById('voice-feedback').classList.remove('active');
+  }
+
+  // ============ VOICE NLP ============
+  function processVoiceCommand(text) {
+    const lower = text.trim().toLowerCase();
+    const cleaned = lower.replace(/^(hey priority|priority|okay)[,\s]+/i, '').trim();
+
+    // Complete
+    const doneMatch = cleaned.match(/^(?:mark|complete|finish|check off|check)\s+(.+?)(?:\s+(?:as\s+)?(?:done|complete|completed|finished))?$/i)
+                   || cleaned.match(/^(?:done|completed|finished)\s+(?:with\s+)?(.+)$/i)
+                   || cleaned.match(/^(.+)\s+(?:is\s+)?(?:done|complete|completed|finished)$/i);
+    if (doneMatch) {
+      const query = doneMatch[1].trim();
+      const match = findTaskByText(query);
+      if (match) {
+        if (!match.done) {
+          match.done = true;
+          match.doneAt = new Date().toISOString();
+          saveTasks();
+          render();
+          toast(`✓ Completed: ${match.title}`, 'success');
+        } else {
+          toast(`Already done: ${match.title}`);
+        }
+      } else {
+        toast(`No task found matching "${query}"`, 'error');
+      }
+      return;
+    }
+
+    // Delete
+    const deleteMatch = cleaned.match(/^(?:delete|remove|cancel)\s+(.+)$/i);
+    if (deleteMatch) {
+      const query = deleteMatch[1].trim();
+      const match = findTaskByText(query);
+      if (match) {
+        deleteTask(match.id);
+        toast(`Deleted: ${match.title}`, 'success');
+      } else {
+        toast(`No task found matching "${query}"`, 'error');
+      }
+      return;
+    }
+
+    // Add
+    let body = cleaned.replace(/^(?:add|create|new)\s+(?:(?:a|an)\s+)?(?:task\s+|item\s+|to-?do\s+|todo\s+)?/i, '');
+    body = body.replace(/^(?:task|item|to-?do|todo)\s+/i, '');
+
+    let quadrant = 4;
+    const importantUrgent = /\b(urgent(?:\s+and\s+important)?|critical|emergency|asap|right now|crisis)\b/i;
+    const importantOnly = /\b(important|strategic|plan(?:ning)?|long[- ]?term|growth)\b/i;
+    const urgentOnly = /\b(quick|interrupt(?:ion)?|delegate)\b/i;
+
+    if (importantUrgent.test(body)) quadrant = 1;
+    else if (importantOnly.test(body)) quadrant = 2;
+    else if (urgentOnly.test(body)) quadrant = 3;
+
+    body = body.replace(importantUrgent, '')
+               .replace(importantOnly, '')
+               .replace(urgentOnly, '')
+               .replace(/\b(?:priority|priority level)\s*\d+\b/i, '')
+               .trim();
+
+    const qMatch = body.match(/\b(?:q(?:uadrant)?\s*)([1-4])\b/i);
+    if (qMatch) {
+      quadrant = parseInt(qMatch[1]);
+      body = body.replace(qMatch[0], '').trim();
+    }
+
+    const { deadline, cleanedText } = parseDeadline(body);
+    body = cleanedText;
+    body = body.replace(/\s+/g, ' ').replace(/^[,.\s]+|[,.\s]+$/g, '').trim();
+
+    if (!body) { toast('Could not understand task', 'error'); return; }
+
+    body = body.charAt(0).toUpperCase() + body.slice(1);
+    const t = addTask({ title: body, quadrant, deadline });
+    if (t) {
+      const qName = ['', 'Do', 'Plan', 'Delegate', 'Eliminate'][quadrant];
+      const dText = deadline ? ` · ${formatDeadline(deadline).text.toLowerCase()}` : '';
+      toast(`+ ${qName}: ${body}${dText}`, 'success');
+    }
+  }
+
+  function findTaskByText(query) {
+    const q = query.toLowerCase().trim();
+    const open = tasks.filter(t => !t.done);
+    const done = tasks.filter(t => t.done);
+    const all = [...open, ...done];
+    let match = all.find(t => t.title.toLowerCase() === q);
+    if (match) return match;
+    match = all.find(t => t.title.toLowerCase().includes(q));
+    if (match) return match;
+    const qWords = q.split(/\s+/).filter(w => w.length > 2);
+    if (qWords.length === 0) return null;
+    let best = null, bestScore = 0;
+    for (const t of all) {
+      const tLower = t.title.toLowerCase();
+      let score = 0;
+      for (const w of qWords) if (tLower.includes(w)) score++;
+      if (score > bestScore) { best = t; bestScore = score; }
+    }
+    return bestScore >= Math.ceil(qWords.length / 2) ? best : null;
+  }
+
+  function parseDeadline(text) {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const toISO = d => {
+      const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    };
+
+    let m = text.match(/\b(?:by\s+|on\s+|due\s+)?today\b/i);
+    if (m) return { deadline: toISO(today), cleanedText: text.replace(m[0], '').trim() };
+
+    m = text.match(/\b(?:by\s+|on\s+|due\s+)?tomorrow\b/i);
+    if (m) { const d = new Date(today); d.setDate(d.getDate() + 1); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+    m = text.match(/\bin\s+(\d+)\s+days?\b/i);
+    if (m) { const d = new Date(today); d.setDate(d.getDate() + parseInt(m[1])); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+    m = text.match(/\bnext\s+week\b/i);
+    if (m) { const d = new Date(today); d.setDate(d.getDate() + 7); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+    const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    m = text.match(/\b(?:by\s+|on\s+|this\s+|next\s+|due\s+)?(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\b/i);
+    if (m) {
+      const targetDay = days.indexOf(m[1].toLowerCase());
+      const currentDay = today.getDay();
+      let diff = targetDay - currentDay;
+      if (diff <= 0) diff += 7;
+      if (/next/i.test(m[0]) && diff < 7) diff += 7;
+      const d = new Date(today); d.setDate(d.getDate() + diff);
+      return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() };
+    }
+
+    m = text.match(/\b(?:by\s+)?end\s+of\s+(?:the\s+)?week\b/i);
+    if (m) { const d = new Date(today); d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7)); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+    m = text.match(/\b(?:by\s+)?end\s+of\s+(?:the\s+)?month\b/i);
+    if (m) { const d = new Date(today.getFullYear(), today.getMonth() + 1, 0); return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() }; }
+
+    const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+    const monthPattern = months.join('|');
+    m = text.match(new RegExp(`\\b(?:by\\s+|on\\s+|due\\s+)?(${monthPattern})\\s+(\\d{1,2})(?:st|nd|rd|th)?\\b`, 'i'));
+    if (m) {
+      const month = months.indexOf(m[1].toLowerCase());
+      const day = parseInt(m[2]);
+      let year = today.getFullYear();
+      const candidate = new Date(year, month, day);
+      if (candidate < today) year++;
+      const d = new Date(year, month, day);
+      return { deadline: toISO(d), cleanedText: text.replace(m[0], '').trim() };
+    }
+
+    return { deadline: null, cleanedText: text };
+  }
+
+  // ============ INIT ============
+  loadTasks();
+  render();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      document.getElementById('quick-input').focus();
+    }
+    if (e.key === 'Escape') {
+      if (editingId) closeEditor();
+      if (isListening) stopListening();
+    }
+  });
+</script>
+
+
+</body></html>
