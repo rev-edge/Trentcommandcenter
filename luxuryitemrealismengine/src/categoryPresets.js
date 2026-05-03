@@ -33,13 +33,12 @@ const COMMON_RENDER = {
   // strap "wraps behind" the wrist edge instead of continuing onto the table.
   bodyClip: true,
   bodyClipTolerance: 0.32,
-  bodyClipCaseLift: 0.55,    // re-draw central-case region on top so the
-                             // dial isn't holed by shadows / hair pixels
-                             // that missed the body threshold.
+  bodyClipCaseLift: 0.85,    // re-draw central case region prominently so
+                             // the case isn't faded by the eroded clip.
   // Strap wrap-shading — darkens the outer ends of the product's long axis
   // so the strap reads as curving under the wrist instead of lying flat.
-  strapWrapShade: 0.7,
-  strapFraction: 0.35,
+  strapWrapShade: 0.92,
+  strapFraction: 0.45,
   // Occlusion (manual paint mask)
   occlusionEnabled: true,
 };

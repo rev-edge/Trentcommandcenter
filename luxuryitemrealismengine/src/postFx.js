@@ -279,8 +279,12 @@ export function drawDirectionalContactShadow(ctx, productImage, matrix, {
 // is expected to cache it per (photoCanvas, skinTone) pair.
 export function buildBodyMask(photoCanvas, skinTone, {
   tolerance = 0.32,
-  dilatePx = 8,
-  softPx = 14,             // strong feather so the strap fades into the wrist
+  // Positive = grow mask outward (gives product edges margin); negative =
+  // shrink mask inward (clips the strap deeper inside the wrist, where the
+  // real wrap-behind point actually is on a cylindrical wrist viewed from
+  // above). Negative values are the realism lever for watches/bracelets.
+  dilatePx = -22,
+  softPx = 26,             // very strong feather so the strap fades smoothly
 } = {}) {
   if (!photoCanvas || !skinTone) return null;
   const W = photoCanvas.width;
@@ -289,20 +293,15 @@ export function buildBodyMask(photoCanvas, skinTone, {
     .getImageData(0, 0, W, H);
   const out = new ImageData(W, H);
   const tol = tolerance * 441;
-  // Use a HSL-like luminance-tolerant compare so wrist hair (darker than
-  // average skin) still classifies as body. Pure RGB distance kills hair.
   const skinL = (skinTone.r + skinTone.g + skinTone.b) / 3;
   for (let i = 0; i < photo.data.length; i += 4) {
     const r = photo.data[i], g = photo.data[i + 1], b = photo.data[i + 2];
-    // Hue-similarity: ratios between channels (skin-like = R > G > B).
     const reddish = r > b && r >= g - 5;
     if (!reddish) continue;
     const dr = r - skinTone.r;
     const dg = g - skinTone.g;
     const db = b - skinTone.b;
     const dist = Math.sqrt(dr * dr + dg * dg + db * db);
-    // Allow darker skin (hair, shadow) by checking distance against a wider
-    // luminance band.
     const L = (r + g + b) / 3;
     const luminanceOk = L >= skinL * 0.45 && L <= skinL * 1.6;
     if (dist >= tol && !(luminanceOk && reddish)) continue;
@@ -312,24 +311,43 @@ export function buildBodyMask(photoCanvas, skinTone, {
   const raw = document.createElement("canvas");
   raw.width = W; raw.height = H;
   raw.getContext("2d").putImageData(out, 0, 0);
-  // Dilate via 8-direction offset stamps for a solid expanded mask.
-  const dilated = document.createElement("canvas");
-  dilated.width = W; dilated.height = H;
-  const dc = dilated.getContext("2d");
-  const r = dilatePx;
-  const offs = [
-    [r, 0], [-r, 0], [0, r], [0, -r],
-    [r, r], [r, -r], [-r, r], [-r, -r],
-    [r * 0.5, 0], [-r * 0.5, 0], [0, r * 0.5], [0, -r * 0.5],
-  ];
-  for (const [dx, dy] of offs) dc.drawImage(raw, dx, dy);
-  dc.drawImage(raw, 0, 0);
+
+  let shaped;
+  if (dilatePx >= 0) {
+    // Dilate: 8-direction offset stamps for a solid expanded mask.
+    shaped = document.createElement("canvas");
+    shaped.width = W; shaped.height = H;
+    const sc = shaped.getContext("2d");
+    const r = dilatePx || 1;
+    const offs = [
+      [r, 0], [-r, 0], [0, r], [0, -r],
+      [r, r], [r, -r], [-r, r], [-r, -r],
+      [r * 0.5, 0], [-r * 0.5, 0], [0, r * 0.5], [0, -r * 0.5],
+    ];
+    for (const [dx, dy] of offs) sc.drawImage(raw, dx, dy);
+    sc.drawImage(raw, 0, 0);
+  } else {
+    // Erode: keep only pixels that are mask AND mask-shifted in every
+    // direction. Implemented via successive destination-in operations.
+    shaped = document.createElement("canvas");
+    shaped.width = W; shaped.height = H;
+    const sc = shaped.getContext("2d");
+    sc.drawImage(raw, 0, 0);
+    const r = -dilatePx;
+    const offs = [
+      [r, 0], [-r, 0], [0, r], [0, -r],
+      [r, r], [r, -r], [-r, r], [-r, -r],
+    ];
+    sc.globalCompositeOperation = "destination-in";
+    for (const [dx, dy] of offs) sc.drawImage(raw, dx, dy);
+    sc.globalCompositeOperation = "source-over";
+  }
   // Soft edge.
   const soft = document.createElement("canvas");
   soft.width = W; soft.height = H;
   const sctx = soft.getContext("2d");
   sctx.filter = `blur(${softPx}px)`;
-  sctx.drawImage(dilated, 0, 0);
+  sctx.drawImage(shaped, 0, 0);
   return soft;
 }
 
