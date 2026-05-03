@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Luxury Item Realism Engine — V1 Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./styles/widget.css"/>
+  <style>
+    body {
+      margin: 0;
+      background: #0a0b0e;
+      color: #f1efe9;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      min-height: 100vh;
+    }
+    .page {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 32px 28px 64px;
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .page-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 34px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.1;
+    }
+    .page-title .accent { color: #c8a564; font-style: italic; }
+    .page-sub {
+      font-size: 13px;
+      color: #9aa0aa;
+      letter-spacing: 0.03em;
+      max-width: 540px;
+      line-height: 1.55;
+      margin-top: 6px;
+    }
+    .page-meta {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+    .page-meta b { color: #c8a564; font-weight: 600; }
+  </style>
+</head>
+<body class="lire-host">
+  <div class="page">
+    <header class="page-header">
+      <div>
+        <div class="page-title">Luxury Item Realism <span class="accent">Engine</span></div>
+        <div class="page-sub">Deterministic 2.5D try-on for watches, rings, bracelets, and handbags. Real-world dimensions, anchor-driven scaling, contact + ambient shadows, edge feathering, and scene color matching — no AI in the render path.</div>
+      </div>
+      <div class="page-meta">V1 Prototype · <b>Realism mode</b> when raster assets are present</div>
+    </header>
+    <div id="lire-mount"></div>
+  </div>
+
+  <script type="module">
+    import { mountLuxuryTryOn } from "./src/embed.js";
+    mountLuxuryTryOn(document.getElementById("lire-mount"));
+  </script>
+</body>
+</html>
