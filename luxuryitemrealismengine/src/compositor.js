@@ -7,11 +7,18 @@
 //     → occlusion mask   (photo pixels overlaid where the body covers product)
 
 import { pixelsPerMm, productPixelSize, composeMatrix, drawWithMatrix } from "./transform.js";
-import { drawContactShadow, drawCastShadow } from "./shadow.js";
+import { drawCastShadow } from "./shadow.js";
 import { sampleAverageColor, applyAmbientTint, featherEdges } from "./lighting.js";
 import { loadProductImage } from "./assetLoader.js";
 import { OcclusionLayer } from "./occlusion.js";
 import { visualSizeMm } from "./productProfile.js";
+import {
+  applyDirectionalLight,
+  applyContactDarken,
+  applyEdgeGrain,
+  drawDirectionalContactShadow,
+  buildAutoEdgeOcclusionMask,
+} from "./postFx.js";
 
 export class Compositor {
   constructor(canvas) {
@@ -56,7 +63,7 @@ export class Compositor {
     return { source, warning };
   }
 
-  prepareProduct({ featherPx, ambientStrength, anchors }) {
+  prepareProduct({ featherPx, ambientStrength, anchors, lightAngleDeg, contactDarken, directionalLight }) {
     if (!this.productImage) return;
     const sceneTone = ambientStrength > 0 && anchors && this.photoCanvas
       ? sampleAverageColor(
@@ -66,19 +73,33 @@ export class Compositor {
           60,
         )
       : null;
-    const key = `${featherPx}|${ambientStrength}|${sceneTone ? `${sceneTone.r},${sceneTone.g},${sceneTone.b}` : "none"}`;
+    const key = `${featherPx}|${ambientStrength}|${lightAngleDeg}|${contactDarken}|${directionalLight}|` +
+                (sceneTone ? `${sceneTone.r},${sceneTone.g},${sceneTone.b}` : "none");
     if (key === this.lastPrepKey) return;
-    let img = featherPx > 0 ? featherEdges(this.productImage, featherPx) : this.productImage;
-    if (sceneTone && ambientStrength > 0) {
-      const tinted = document.createElement("canvas");
-      tinted.width = img.width;
-      tinted.height = img.height;
-      const tctx = tinted.getContext("2d");
-      tctx.drawImage(img, 0, 0);
-      applyAmbientTint(tctx, sceneTone, ambientStrength);
-      img = tinted;
+    // 1. Feather + ambient tint into a working canvas.
+    let working = document.createElement("canvas");
+    working.width = this.productImage.naturalWidth || this.productImage.width;
+    working.height = this.productImage.naturalHeight || this.productImage.height;
+    const wctx = working.getContext("2d");
+    if (featherPx > 0) {
+      wctx.filter = `blur(${featherPx}px)`;
+      wctx.drawImage(this.productImage, 0, 0, working.width, working.height);
+      wctx.filter = "none";
+    } else {
+      wctx.drawImage(this.productImage, 0, 0, working.width, working.height);
     }
-    this.preparedImage = img;
+    if (sceneTone && ambientStrength > 0) {
+      applyAmbientTint(wctx, sceneTone, ambientStrength);
+    }
+    // 2. Directional lighting tint (warm side / cool side gradient).
+    if (directionalLight > 0) {
+      applyDirectionalLight(working, lightAngleDeg, { strength: directionalLight });
+    }
+    // 3. Contact darkening — darker rim on shadow-side edge ("press into skin").
+    if (contactDarken > 0) {
+      applyContactDarken(working, lightAngleDeg, { strength: contactDarken });
+    }
+    this.preparedImage = working;
     this.lastPrepKey = key;
   }
 
@@ -139,6 +160,9 @@ export class Compositor {
     this.prepareProduct({
       featherPx: params.featherPx,
       ambientStrength: params.ambientStrength,
+      lightAngleDeg: params.lightAngleDeg,
+      contactDarken: params.contactDarken ?? 0,
+      directionalLight: params.directionalLight ?? 0,
       anchors,
     });
 
@@ -173,17 +197,57 @@ export class Compositor {
       });
     }
     if (params.contactShadow > 0) {
-      drawContactShadow(ctx, this.preparedImage, matrix, {
+      drawDirectionalContactShadow(ctx, this.preparedImage, matrix, {
+        lightAngleDeg: params.lightAngleDeg,
         opacity: params.contactShadow,
+        edgeOpacity: Math.min(1, params.contactShadow * 1.4),
         blurPx: params.contactShadowBlur,
-        distance: params.contactShadowDistance,
-        angleDeg: params.lightAngleDeg,
+        spreadPx: params.contactShadowDistance * 4,
       });
     }
-    drawWithMatrix(ctx, this.preparedImage, matrix, params.productOpacity);
+    // Edge grain pass: blend a tiny amount of photo into the product's
+    // feathered edge so the cut doesn't read as a perfect PNG. Done into a
+    // copy so the cached preparedImage stays unchanged across renders that
+    // only move anchors.
+    let renderedImage = this.preparedImage;
+    if ((params.edgeGrain ?? 0) > 0 && this.photoCanvas) {
+      const copy = document.createElement("canvas");
+      copy.width = this.preparedImage.width;
+      copy.height = this.preparedImage.height;
+      copy.getContext("2d").drawImage(this.preparedImage, 0, 0);
+      applyEdgeGrain(copy, this.photoCanvas, matrix, { strength: params.edgeGrain });
+      renderedImage = copy;
+    }
+    drawWithMatrix(ctx, renderedImage, matrix, params.productOpacity);
 
     if (params.occlusionEnabled !== false) {
       this.occlusion.applyTo(ctx, this.photoCanvas);
+    }
+    // Auto edge-occlusion: build a transient skin-edge halo each render so
+    // wrist hair / contour edges intrude over the product perimeter without
+    // touching the user-painted mask.
+    if (params.autoEdgeOcclude && this.photoCanvas) {
+      const tone = this.sceneSkinTone(anchors);
+      if (tone) {
+        const halo = buildAutoEdgeOcclusionMask(this.photoCanvas, this.preparedImage, matrix, tone, {
+          tolerance: params.autoEdgeTolerance ?? 0.16,
+          reachPx: params.autoEdgeReach ?? 18,
+        });
+        if (halo) {
+          // Composite photo through the halo onto the destination.
+          const buf = document.createElement("canvas");
+          buf.width = this.photoCanvas.width;
+          buf.height = this.photoCanvas.height;
+          const bc = buf.getContext("2d");
+          bc.drawImage(this.photoCanvas, 0, 0);
+          bc.globalCompositeOperation = "destination-in";
+          bc.drawImage(halo, 0, 0);
+          ctx.save();
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.drawImage(buf, 0, 0);
+          ctx.restore();
+        }
+      }
     }
   }
 

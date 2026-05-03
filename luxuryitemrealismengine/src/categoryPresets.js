@@ -13,16 +13,23 @@ const COMMON_RENDER = {
   scale: 1,
   productOpacity: 1,
   ambientStrength: 0.22,
-  featherPx: 1.0,
-  // New directional-shadow model:
-  lightAngleDeg: 135,        // light from upper-left → shadow falls lower-right
+  featherPx: 1.4,             // slightly stronger feather; edge grain finishes the job
+  // Directional shadow:
+  lightAngleDeg: 135,         // light from upper-left → shadow falls lower-right
   contactShadow: 0.55,        // strongest at the touch line
-  contactShadowBlur: 6,       // sharp band at contact
-  contactShadowDistance: 4,   // small perpendicular offset along light vector
-  castShadow: 0.28,           // softer, longer shadow
+  contactShadowBlur: 6,
+  contactShadowDistance: 4,
+  castShadow: 0.28,
   castShadowBlur: 28,
   castShadowDistance: 18,
-  // Occlusion preview (mask is painted in occlusion.js)
+  // Realism refinement defaults (added pass 2):
+  contactDarken: 0.45,        // darker rim on shadow-side edge ("press into skin")
+  directionalLight: 0.28,     // warm-side / cool-side gradient on the product
+  edgeGrain: 0.18,            // photo blend along feathered edge to avoid PNG cut
+  autoEdgeOcclude: true,      // auto-paint thin skin-edge halo each render
+  autoEdgeTolerance: 0.16,
+  autoEdgeReach: 16,
+  // Occlusion (manual paint mask)
   occlusionEnabled: true,
 };
 
@@ -55,7 +62,9 @@ export const CATEGORY_PRESETS = {
       contactShadowDistance: 2,
       castShadowBlur: 12,
       castShadowDistance: 6,
-      featherPx: 0.8,
+      featherPx: 1.0,
+      contactDarken: 0.22,
+      autoEdgeReach: 8,
     },
   },
   bracelet: {
@@ -78,7 +87,7 @@ export const CATEGORY_PRESETS = {
   bag: {
     label: "Handbags",
     anchor: "hand",
-    refMmDefault: 220,              // hand-to-bag-bottom span (matches bag heightMm)
+    refMmDefault: 220,
     refMmRange: [120, 360],
     anchorHint: "Drag from the hand down to where the bag's bottom should sit. Defines size and angle.",
     render: {
@@ -93,7 +102,11 @@ export const CATEGORY_PRESETS = {
       castShadowBlur: 48,
       castShadowDistance: 32,
       ambientStrength: 0.25,
-      featherPx: 1.6,
+      featherPx: 1.8,
+      contactDarken: 0.20,
+      directionalLight: 0.14,
+      autoEdgeOcclude: false,        // bags use the full auto-occlude flow, not edge-only
+      autoEdgeReach: 24,
     },
   },
 };
