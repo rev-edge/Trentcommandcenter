@@ -7,6 +7,58 @@
 // has alpha > 0 (so the surrounding transparent area stays empty) unless
 // otherwise noted.
 
+// Strap wrap-shading. The product asset is laid flat (e.g. watch strap
+// running straight from top to bottom of the image), but in reality the
+// strap CURVES around the wrist — the parts furthest from the case go
+// underneath and into shadow. We fake this with a gradient darkening that
+// peaks at the OUTER ENDS of the product's long axis and fades to zero at
+// the case center. Combined with the body clip (which removes whatever
+// extends past the wrist edge), this sells the wrap-around illusion
+// without re-rendering or warping the asset.
+//
+// The "long axis" is automatic: whichever of width/height is larger.
+// `strapFraction` controls how much of each end is treated as strap (the
+// remainder in the middle is preserved as the case).
+export function applyStrapWrapShade(productCanvas, {
+  strength = 0.85,         // peak darkness at the very tips
+  strapFraction = 0.35,    // top 35% + bottom 35% of long axis = strap region
+  curve = 2.0,             // power curve — higher = darkens only the very ends
+} = {}) {
+  if (strength <= 0) return;
+  const w = productCanvas.width, h = productCanvas.height;
+  const ctx = productCanvas.getContext("2d");
+  const longAxisVertical = h >= w;
+  const span = longAxisVertical ? h : w;
+  const strapPx = span * strapFraction;
+  // Build a darkening gradient along the long axis, peaking at the ends.
+  let grad;
+  if (longAxisVertical) {
+    grad = ctx.createLinearGradient(0, 0, 0, h);
+  } else {
+    grad = ctx.createLinearGradient(0, 0, w, 0);
+  }
+  // Ramp: full darkness at the very edge → zero at the strap-case boundary
+  // → zero through the case → zero at the opposite case-strap boundary →
+  // full darkness at the opposite edge.
+  const stops = 16;
+  for (let i = 0; i <= stops; i++) {
+    const t = i / stops;
+    const distFromCenter = Math.abs(t - 0.5) * 2;       // 0 at center, 1 at ends
+    const strapStart = 1 - strapFraction * 2;            // e.g. 0.30 if frac=0.35
+    let darken = 0;
+    if (distFromCenter > strapStart) {
+      const localT = (distFromCenter - strapStart) / (1 - strapStart);
+      darken = Math.pow(localT, curve) * strength;
+    }
+    grad.addColorStop(t, `rgba(0,0,0,${darken.toFixed(3)})`);
+  }
+  ctx.save();
+  ctx.globalCompositeOperation = "source-atop";
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+  ctx.restore();
+}
+
 // Multi-stop linear-gradient mask along the light → shadow axis. Used to
 // darken the side of the product opposite the light (contact press-in) and
 // lift the lit side slightly. `lightAngleDeg` follows the same convention as
@@ -226,9 +278,9 @@ export function drawDirectionalContactShadow(ctx, productImage, matrix, {
 // The mask is expensive to compute (full-photo pixel scan) so the caller
 // is expected to cache it per (photoCanvas, skinTone) pair.
 export function buildBodyMask(photoCanvas, skinTone, {
-  tolerance = 0.32,        // generous — we want to keep skin in shadow areas too
-  dilatePx = 6,            // grow the mask outward to give product edges margin
-  softPx = 4,              // light blur so the clip line isn't a razor cut
+  tolerance = 0.32,
+  dilatePx = 8,
+  softPx = 14,             // strong feather so the strap fades into the wrist
 } = {}) {
   if (!photoCanvas || !skinTone) return null;
   const W = photoCanvas.width;

@@ -36,6 +36,10 @@ const COMMON_RENDER = {
   bodyClipCaseLift: 0.55,    // re-draw central-case region on top so the
                              // dial isn't holed by shadows / hair pixels
                              // that missed the body threshold.
+  // Strap wrap-shading — darkens the outer ends of the product's long axis
+  // so the strap reads as curving under the wrist instead of lying flat.
+  strapWrapShade: 0.7,
+  strapFraction: 0.35,
   // Occlusion (manual paint mask)
   occlusionEnabled: true,
 };
@@ -72,6 +76,7 @@ export const CATEGORY_PRESETS = {
       featherPx: 1.0,
       contactDarken: 0.22,
       autoEdgeReach: 8,
+      strapWrapShade: 0,         // rings have no strap — disable
     },
   },
   bracelet: {
@@ -116,6 +121,7 @@ export const CATEGORY_PRESETS = {
       autoEdgeReach: 24,
       bodyClip: false,            // bags hang OFF the body intentionally
       bodyClipCaseLift: 0,
+      strapWrapShade: 0,
     },
   },
 };

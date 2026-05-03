@@ -16,6 +16,7 @@ import {
   applyDirectionalLight,
   applyContactDarken,
   applyEdgeGrain,
+  applyStrapWrapShade,
   drawDirectionalContactShadow,
   buildAutoEdgeOcclusionMask,
   buildBodyMask,
@@ -79,7 +80,7 @@ export class Compositor {
     return { source, warning };
   }
 
-  prepareProduct({ featherPx, ambientStrength, anchors, lightAngleDeg, contactDarken, directionalLight }) {
+  prepareProduct({ featherPx, ambientStrength, anchors, lightAngleDeg, contactDarken, directionalLight, strapWrapShade, strapFraction }) {
     if (!this.productImage) return;
     const sceneTone = ambientStrength > 0 && anchors && this.photoCanvas
       ? sampleAverageColor(
@@ -89,7 +90,7 @@ export class Compositor {
           60,
         )
       : null;
-    const key = `${featherPx}|${ambientStrength}|${lightAngleDeg}|${contactDarken}|${directionalLight}|` +
+    const key = `${featherPx}|${ambientStrength}|${lightAngleDeg}|${contactDarken}|${directionalLight}|${strapWrapShade}|${strapFraction}|` +
                 (sceneTone ? `${sceneTone.r},${sceneTone.g},${sceneTone.b}` : "none");
     if (key === this.lastPrepKey) return;
     // 1. Feather + ambient tint into a working canvas.
@@ -114,6 +115,14 @@ export class Compositor {
     // 3. Contact darkening — darker rim on shadow-side edge ("press into skin").
     if (contactDarken > 0) {
       applyContactDarken(working, lightAngleDeg, { strength: contactDarken });
+    }
+    // 4. Strap wrap-shading — progressively darken the long-axis ends so the
+    // strap reads as curving under the wrist instead of lying flat on top.
+    if ((strapWrapShade ?? 0) > 0) {
+      applyStrapWrapShade(working, {
+        strength: strapWrapShade,
+        strapFraction: strapFraction ?? 0.35,
+      });
     }
     this.preparedImage = working;
     this.lastPrepKey = key;
@@ -179,6 +188,8 @@ export class Compositor {
       lightAngleDeg: params.lightAngleDeg,
       contactDarken: params.contactDarken ?? 0,
       directionalLight: params.directionalLight ?? 0,
+      strapWrapShade: params.strapWrapShade ?? 0,
+      strapFraction: params.strapFraction ?? 0.35,
       anchors,
     });
 
