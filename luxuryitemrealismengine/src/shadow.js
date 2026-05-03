@@ -1,21 +1,19 @@
-// Contact-shadow generation. Builds a soft shadow from the product's alpha
-// channel, then composites it under the product layer using the same matrix.
+// Directional shadow model.
+//
+// Two passes:
+//   1. CONTACT — sharp, low opacity, small offset; sells "the product touches the body"
+//   2. CAST — soft, lower opacity, larger offset; sells "the body is between the product and a light"
+//
+// Both shadows are rendered from the product's alpha mask (silhouette) and
+// offset along the unit vector pointing AWAY from the light source. A single
+// `lightAngleDeg` controls direction:
+//   0°   → light from the right    (shadow falls to the left)
+//   90°  → light from below        (shadow falls upward — unusual)
+//   135° → light from upper-left   (shadow falls lower-right) — default
+//   180° → light from the left
+//   270° → light from above        (shadow falls downward)
 
 import { drawWithMatrix } from "./transform.js";
-
-// Render a soft drop shadow by drawing the product image, tinted black, with
-// a Gaussian blur. The shadow is offset slightly along the lighting direction.
-export function drawContactShadow(ctx, image, matrix, { opacity = 0.45, blurPx = 14, offsetX = 4, offsetY = 8 } = {}) {
-  ctx.save();
-  ctx.globalAlpha = opacity;
-  ctx.filter = `blur(${blurPx}px)`;
-  ctx.setTransform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.e + offsetX, matrix.f + offsetY);
-  // Draw a black silhouette by masking the source through globalCompositeOperation.
-  // We draw the image, then paint it black using "source-in" inside an offscreen
-  // canvas so the alpha shape is preserved.
-  ctx.drawImage(silhouette(image), -matrix.width / 2, -matrix.height / 2, matrix.width, matrix.height);
-  ctx.restore();
-}
 
 const silhouetteCache = new WeakMap();
 
@@ -36,11 +34,49 @@ function silhouette(image) {
   return off;
 }
 
-// A wider, softer ambient shadow that sits beneath the product to anchor it to
-// the scene. Very low opacity, large blur, no offset. Helps avoid the "sticker"
-// look without needing real ray-traced shadows.
-export function drawAmbientShadow(ctx, image, matrix, { opacity = 0.25, blurPx = 28 } = {}) {
-  drawContactShadow(ctx, image, matrix, { opacity, blurPx, offsetX: 0, offsetY: 4 });
+function lightVector(angleDeg) {
+  // Returns the unit vector pointing in the direction the SHADOW falls
+  // (opposite the light source). angleDeg uses the math convention:
+  // 0° = light from the right, 90° = light from above (the photo subject's
+  // "up", which is canvas-down sin direction). 135° = upper-left light →
+  // shadow falls lower-right. Canvas Y is positive downward, so the y
+  // component of the shadow direction matches +sin(rad) when light is above.
+  const rad = (angleDeg * Math.PI) / 180;
+  return { x: -Math.cos(rad), y: Math.sin(rad) };
+}
+
+function drawShadow(ctx, image, matrix, { opacity, blurPx, distance, angleDeg }) {
+  if (opacity <= 0) return;
+  const v = lightVector(angleDeg);
+  const offX = v.x * distance;
+  const offY = v.y * distance;
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.filter = `blur(${blurPx}px)`;
+  ctx.setTransform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.e + offX, matrix.f + offY);
+  ctx.drawImage(silhouette(image), -matrix.width / 2, -matrix.height / 2, matrix.width, matrix.height);
+  ctx.restore();
+}
+
+// Sharp shadow band right at the contact line.
+export function drawContactShadow(ctx, image, matrix, params) {
+  drawShadow(ctx, image, matrix, {
+    opacity: params.opacity ?? 0.5,
+    blurPx: params.blurPx ?? 6,
+    distance: params.distance ?? 3,
+    angleDeg: params.angleDeg ?? 135,
+  });
+}
+
+// Soft, longer cast shadow. The product silhouette is drawn larger and softer
+// so the cast extends past the contact band naturally.
+export function drawCastShadow(ctx, image, matrix, params) {
+  drawShadow(ctx, image, matrix, {
+    opacity: params.opacity ?? 0.25,
+    blurPx: params.blurPx ?? 26,
+    distance: params.distance ?? 18,
+    angleDeg: params.angleDeg ?? 135,
+  });
 }
 
 export { drawWithMatrix };

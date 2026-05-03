@@ -18,11 +18,13 @@ export function pixelsPerMm(anchorA, anchorB, referenceWidthMm) {
 }
 
 // Compute the on-canvas size for a product, given its real width (mm), the
-// scene's pixels-per-mm, and a user fine-tune scale multiplier.
+// scene's pixels-per-mm, and a user fine-tune scale multiplier. Prefers
+// visualWidthMm/visualHeightMm when set (e.g., bracelets render at wrist
+// width, not their unrolled length).
 export function productPixelSize(product, ppmm, fineScale = 1) {
-  const w = product.widthMm * ppmm * fineScale;
-  const h = product.heightMm * ppmm * fineScale;
-  return { width: w, height: h };
+  const widthMm = product.visualWidthMm ?? product.widthMm;
+  const heightMm = product.visualHeightMm ?? product.heightMm;
+  return { width: widthMm * ppmm * fineScale, height: heightMm * ppmm * fineScale };
 }
 
 // Build a CSS / Canvas affine transform matrix string for a product placed at

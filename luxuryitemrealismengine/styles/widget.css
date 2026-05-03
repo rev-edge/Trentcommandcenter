@@ -354,3 +354,96 @@
   border-color: var(--lire-accent);
 }
 .lire-actions button.primary:hover { background: #d6b478; }
+
+/* ---------- Sample-photo pills ---------- */
+.lire-samples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.sample-pill {
+  background: var(--lire-surface);
+  border: 1px solid var(--lire-border-soft);
+  border-radius: 999px;
+  color: var(--lire-text-dim);
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.sample-pill:hover { border-color: var(--lire-accent); color: var(--lire-text); }
+
+/* ---------- Tools strip ---------- */
+.lire-tools {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  gap: 6px;
+  background: rgba(14, 15, 18, 0.78);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--lire-border-soft);
+  border-radius: var(--lire-radius-sm);
+  padding: 6px;
+  align-items: center;
+  transition: opacity 0.15s ease;
+}
+.lire-tools .tool {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--lire-text-dim);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 6px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lire-tools .tool:hover { color: var(--lire-text); border-color: var(--lire-border); }
+.lire-tools .tool.is-active {
+  background: var(--lire-accent);
+  color: #1a1408;
+  border-color: var(--lire-accent);
+}
+.lire-tools .tool.brush {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+}
+.lire-tools .tool.brush input[type=range] {
+  width: 80px;
+  height: 3px;
+  background: var(--lire-border);
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+}
+.lire-tools .tool.brush input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--lire-accent); border: 2px solid #1a1408; cursor: pointer;
+}
+.lire-tools .tool.preview-toggle.is-active {
+  background: #2a2418;
+  color: var(--lire-accent);
+  border-color: var(--lire-accent);
+}
+
+/* Detail-only product cards get a subtle dim treatment */
+.product-card.is-detail { opacity: 0.6; }
+.product-card-flag {
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lire-warn);
+  margin-top: 2px;
+}

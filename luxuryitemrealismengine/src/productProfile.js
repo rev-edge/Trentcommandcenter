@@ -4,14 +4,25 @@
 
 /**
  * @typedef {Object} ProductAsset
- * @property {string} url            - Primary high-res raster (PNG/WebP) URL with transparency.
+ * @property {string} url
  * @property {("png"|"webp"|"jpg")} [format]
- * @property {number} [naturalWidthPx]
- * @property {number} [naturalHeightPx]
- * @property {boolean} [hasAlpha]    - True if background already removed.
- * @property {number} [qualityScore] - 0..1 enrichment-time score from QA model.
- * @property {string} [svgFallback]  - Optional SVG markup used ONLY when raster is unavailable.
- * @property {("hero"|"calibration"|"placeholder")} [role]
+ * @property {boolean} [hasAlpha]
+ * @property {number} [qualityScore]
+ * @property {string} [svgFallback]
+ * @property {("hero"|"detail"|"calibration"|"placeholder")} [role]
+ */
+
+/**
+ * @typedef {Object} ProductDimensions
+ * @property {number} widthMm        Catalog width (legacy) — defaults to visualWidthMm if not set.
+ * @property {number} heightMm       Catalog height — defaults to visual height if not set.
+ * @property {number} [depthMm]
+ * @property {number} [visualWidthMm]    On-screen width when rendered on the body. For a bracelet
+ *                                       this is the visible top-arc width across the wrist (~55mm),
+ *                                       NOT its unrolled length.
+ * @property {number} [visualHeightMm]   On-screen height (same coordinate system as visualWidthMm).
+ * @property {number} [circumferenceMm]  Real-world unrolled / wrap length. Used for sizing
+ *                                       guidance, not direct rendering.
  */
 
 /**
@@ -21,28 +32,23 @@
  * @property {string} brand
  * @property {string} model
  * @property {("watch"|"ring"|"bracelet"|"bag")} category
- * @property {Object} dimensions
- * @property {number} dimensions.widthMm
- * @property {number} dimensions.heightMm
- * @property {number} [dimensions.depthMm]
- * @property {string[]} [materials]    - e.g., ["904L stainless", "sapphire crystal"]
- * @property {string} [finish]         - e.g., "polished", "brushed", "PVD"
- * @property {ProductAsset} asset      - Primary render asset (raster preferred).
+ * @property {ProductDimensions} dimensions
+ * @property {string[]} [materials]
+ * @property {string} [finish]
+ * @property {ProductAsset} asset
  * @property {ProductAsset[]} [alternates]
  * @property {("wrist"|"finger"|"hand")} anchor
- * @property {number} refMm            - Real-world mm spanned by the user-drawn anchor line.
+ * @property {number} refMm
+ * @property {("hero"|"detail")} [usability]   "hero" = full product visible & wearable;
+ *                                              "detail" = close-up / partial / lifestyle (not a
+ *                                              standalone try-on asset).
  * @property {Object} [renderHints]
- * @property {number} [renderHints.liftPx]
- * @property {number} [renderHints.rotationOffsetDeg]
- * @property {number} [renderHints.perspectiveDeg]
- * @property {number} [renderHints.contactShadow]
- * @property {string} [sourceUrl]      - Where this product came from.
- * @property {number} [enrichedAt]     - Unix ms.
+ * @property {string} [sourceUrl]
  */
 
-// Build a normalized profile, filling defaults. Keeps callers terse and the
-// engine's internal contract strict.
 export function makeProfile(input) {
+  const visualWidthMm = input.dimensions?.visualWidthMm ?? input.dimensions?.widthMm ?? input.widthMm;
+  const visualHeightMm = input.dimensions?.visualHeightMm ?? input.dimensions?.heightMm ?? input.heightMm;
   return {
     id: input.id,
     name: input.name,
@@ -53,6 +59,9 @@ export function makeProfile(input) {
       widthMm: input.dimensions?.widthMm ?? input.widthMm,
       heightMm: input.dimensions?.heightMm ?? input.heightMm,
       depthMm: input.dimensions?.depthMm,
+      visualWidthMm,
+      visualHeightMm,
+      circumferenceMm: input.dimensions?.circumferenceMm,
     },
     materials: input.materials || [],
     finish: input.finish || "",
@@ -60,6 +69,7 @@ export function makeProfile(input) {
     alternates: (input.alternates || []).map(normalizeAsset),
     anchor: input.anchor,
     refMm: input.refMm,
+    usability: input.usability || "hero",
     renderHints: input.renderHints || {},
     sourceUrl: input.sourceUrl || "",
     enrichedAt: input.enrichedAt || null,
@@ -70,8 +80,6 @@ function normalizeAsset(a) {
   return {
     url: a.url || "",
     format: a.format || inferFormat(a.url),
-    naturalWidthPx: a.naturalWidthPx,
-    naturalHeightPx: a.naturalHeightPx,
     hasAlpha: a.hasAlpha ?? true,
     qualityScore: a.qualityScore,
     svgFallback: a.svgFallback || "",
@@ -86,13 +94,18 @@ function inferFormat(url) {
   return m[1] === "jpeg" ? "jpg" : m[1];
 }
 
-// True if the profile has a usable raster asset (preferred render path).
 export function hasRasterAsset(profile) {
   return Boolean(profile?.asset?.url) && profile.asset.format !== "svg";
 }
 
-// True if we'll have to fall back to the SVG placeholder. The UI should
-// surface this to the user so they know the realism is degraded.
 export function isFallbackOnly(profile) {
   return !hasRasterAsset(profile) && Boolean(profile?.asset?.svgFallback);
+}
+
+export function visualSizeMm(profile) {
+  const d = profile.dimensions;
+  return {
+    widthMm: d.visualWidthMm ?? d.widthMm,
+    heightMm: d.visualHeightMm ?? d.heightMm,
+  };
 }

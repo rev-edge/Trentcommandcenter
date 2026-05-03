@@ -1,94 +1,98 @@
-// Per-category render defaults. Each anchor type has a different
-// real-world reference width and a different "looks right" baseline for
-// shadow, lift, and perspective. These are the starting points the user
-// can fine-tune via the controls panel.
+// Per-category render defaults. Each anchor type has a different real-world
+// reference width and a different "looks right" baseline for shadow, lift,
+// and perspective. These are the starting points the user can fine-tune.
+//
+// Lighting note: ambient color match defaults raised to 0.22 after V1 QA —
+// the previous 0.10 default was effectively invisible on tinted scenes.
+//
+// Shadow note: previous V1 used independent X/Y shadow offsets. We now
+// express the contact-shadow offset as a single "lightAngleDeg" (the
+// direction *toward* the light source) and a contact distance/spread.
+
+const COMMON_RENDER = {
+  scale: 1,
+  productOpacity: 1,
+  ambientStrength: 0.22,
+  featherPx: 1.0,
+  // New directional-shadow model:
+  lightAngleDeg: 135,        // light from upper-left → shadow falls lower-right
+  contactShadow: 0.55,        // strongest at the touch line
+  contactShadowBlur: 6,       // sharp band at contact
+  contactShadowDistance: 4,   // small perpendicular offset along light vector
+  castShadow: 0.28,           // softer, longer shadow
+  castShadowBlur: 28,
+  castShadowDistance: 18,
+  // Occlusion preview (mask is painted in occlusion.js)
+  occlusionEnabled: true,
+};
 
 export const CATEGORY_PRESETS = {
   watch: {
     label: "Watches",
     anchor: "wrist",
-    refMmDefault: 55,        // average wrist width across the dial axis
+    refMmDefault: 55,
     refMmRange: [40, 80],
-    anchorHint: "Drag the two dots to the inner and outer edges of the wrist where the watch sits.",
+    anchorHint: "Drag the two dots across the wrist (perpendicular to the arm) at the watch position.",
     render: {
-      scale: 1,
-      rotationDeg: 90,        // anchor line is across wrist; watch sits perpendicular
+      ...COMMON_RENDER,
+      rotationDeg: 90,        // anchor crosses the wrist; watch sits perpendicular
       perspectiveDeg: 0,
       liftPx: 0,
-      productOpacity: 1,
-      contactShadow: 0.5,
-      contactShadowBlur: 10,
-      shadowOffsetX: 2,
-      shadowOffsetY: 6,
-      ambientShadow: 0.18,
-      ambientShadowBlur: 26,
-      ambientStrength: 0.12,
-      featherPx: 1.2,
     },
   },
   ring: {
     label: "Rings",
     anchor: "finger",
-    refMmDefault: 16,         // average ring-finger base width
+    refMmDefault: 16,
     refMmRange: [12, 22],
     anchorHint: "Drag the two dots across the base of the chosen finger, perpendicular to the finger.",
     render: {
-      scale: 1,
+      ...COMMON_RENDER,
       rotationDeg: 90,
       perspectiveDeg: 0,
       liftPx: 0,
-      productOpacity: 1,
-      contactShadow: 0.45,
-      contactShadowBlur: 6,
-      shadowOffsetX: 1,
-      shadowOffsetY: 3,
-      ambientShadow: 0.12,
-      ambientShadowBlur: 14,
-      ambientStrength: 0.1,
-      featherPx: 0.9,
+      contactShadowBlur: 3,
+      contactShadowDistance: 2,
+      castShadowBlur: 12,
+      castShadowDistance: 6,
+      featherPx: 0.8,
     },
   },
   bracelet: {
     label: "Bracelets",
-    anchor: "wrist",
-    refMmDefault: 55,
+    anchor: "wrist",                // FIXED: now across-wrist like watch
+    refMmDefault: 55,               // wrist width reference
     refMmRange: [40, 80],
-    anchorHint: "Drag the two dots along the wrist where the bracelet should rest.",
+    anchorHint: "Drag the two dots across the wrist where the bracelet should rest. Same gesture as the watch.",
     render: {
-      scale: 1,
-      rotationDeg: 0,         // bracelet wraps along the anchor line
-      perspectiveDeg: 6,
+      ...COMMON_RENDER,
+      rotationDeg: 90,              // bracelet visible width sits across the wrist
+      perspectiveDeg: 0,
       liftPx: 0,
-      productOpacity: 1,
-      contactShadow: 0.45,
-      contactShadowBlur: 8,
-      shadowOffsetX: 2,
-      shadowOffsetY: 5,
-      ambientShadow: 0.16,
-      ambientShadowBlur: 22,
-      ambientStrength: 0.12,
-      featherPx: 1.0,
+      contactShadowBlur: 6,
+      contactShadowDistance: 3,
+      castShadowBlur: 22,
+      castShadowDistance: 12,
     },
   },
   bag: {
     label: "Handbags",
     anchor: "hand",
-    refMmDefault: 180,        // typical hand-to-bag-bottom span
-    refMmRange: [120, 320],
+    refMmDefault: 220,              // hand-to-bag-bottom span (matches bag heightMm)
+    refMmRange: [120, 360],
     anchorHint: "Drag from the hand down to where the bag's bottom should sit. Defines size and angle.",
     render: {
-      scale: 1,
+      ...COMMON_RENDER,
       rotationDeg: 0,
       perspectiveDeg: 0,
       liftPx: 0,
-      productOpacity: 1,
-      contactShadow: 0.4,
-      contactShadowBlur: 18,
-      shadowOffsetX: 4,
-      shadowOffsetY: 14,
-      ambientShadow: 0.22,
-      ambientShadowBlur: 40,
-      ambientStrength: 0.14,
+      contactShadow: 0.35,
+      contactShadowBlur: 14,
+      contactShadowDistance: 8,
+      castShadow: 0.32,
+      castShadowBlur: 48,
+      castShadowDistance: 32,
+      ambientStrength: 0.25,
       featherPx: 1.6,
     },
   },
@@ -98,7 +102,6 @@ export function presetFor(category) {
   return CATEGORY_PRESETS[category] || CATEGORY_PRESETS.watch;
 }
 
-// Merge preset render defaults with any per-product hints.
 export function resolveRenderParams(profile) {
   const preset = presetFor(profile.category);
   return {

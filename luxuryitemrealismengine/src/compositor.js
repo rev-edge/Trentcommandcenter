@@ -1,11 +1,17 @@
-// Render pipeline: photo -> ambient shadow -> contact shadow -> product layer
-// (with edge feather + ambient color match). Fully deterministic; no AI in the
-// render path. Raster (PNG/WebP) assets are the realism path; SVG is fallback.
+// Render pipeline (deterministic, no AI):
+//
+//   photo
+//     → cast shadow      (soft, far)
+//     → contact shadow   (sharp, at touch)
+//     → product layer    (with edge feather + ambient color match)
+//     → occlusion mask   (photo pixels overlaid where the body covers product)
 
 import { pixelsPerMm, productPixelSize, composeMatrix, drawWithMatrix } from "./transform.js";
-import { drawContactShadow, drawAmbientShadow } from "./shadow.js";
+import { drawContactShadow, drawCastShadow } from "./shadow.js";
 import { sampleAverageColor, applyAmbientTint, featherEdges } from "./lighting.js";
 import { loadProductImage } from "./assetLoader.js";
+import { OcclusionLayer } from "./occlusion.js";
+import { visualSizeMm } from "./productProfile.js";
 
 export class Compositor {
   constructor(canvas) {
@@ -15,10 +21,11 @@ export class Compositor {
     this.photoCanvas = null;
     this.profile = null;
     this.productImage = null;
-    this.assetSource = null;        // 'raster' | 'fallback'
+    this.assetSource = null;
     this.assetWarning = null;
     this.preparedImage = null;
     this.lastPrepKey = null;
+    this.occlusion = new OcclusionLayer();
   }
 
   async setPhoto(image) {
@@ -32,10 +39,10 @@ export class Compositor {
     const off = document.createElement("canvas");
     off.width = this.canvas.width;
     off.height = this.canvas.height;
-    // willReadFrequently is set because lighting.sampleAverageColor reads pixels
-    // every render to compute the ambient tint.
     off.getContext("2d", { willReadFrequently: true }).drawImage(image, 0, 0, off.width, off.height);
     this.photoCanvas = off;
+    this.occlusion.resize(this.canvas.width, this.canvas.height);
+    this.occlusion.clear();
   }
 
   async setProduct(profile) {
@@ -56,7 +63,7 @@ export class Compositor {
           this.photoCanvas,
           (anchors[0].x + anchors[1].x) / 2,
           (anchors[0].y + anchors[1].y) / 2,
-          40,
+          60,
         )
       : null;
     const key = `${featherPx}|${ambientStrength}|${sceneTone ? `${sceneTone.r},${sceneTone.g},${sceneTone.b}` : "none"}`;
@@ -75,6 +82,53 @@ export class Compositor {
     this.lastPrepKey = key;
   }
 
+  // Helper: estimate skin tone for auto-occlusion. Strategy by anchor shape:
+  //   - SHORT anchor (watch / bracelet / ring across a body part): both
+  //     endpoints are on skin; sample perpendicular to the line so we land
+  //     beyond any tiny product overlap.
+  //   - LONG anchor (handbag: hand → bag bottom): only anchor[0] is on the
+  //     body. Sample at anchor[0] with a small radius.
+  // Heuristic: if anchor length > 1.5× the product's expected pixel width,
+  // treat it as a "long" hand-to-bag anchor.
+  sceneSkinTone(anchors) {
+    if (!anchors || !this.photoCanvas) return null;
+    const dx = anchors[1].x - anchors[0].x;
+    const dy = anchors[1].y - anchors[0].y;
+    const len = Math.hypot(dx, dy) || 1;
+    const productWidthPx = this.profile?.dimensions?.visualWidthMm
+      ? this.profile.dimensions.visualWidthMm * (len / (this.profile.refMm || 55))
+      : len;
+    const isLongAnchor = len > productWidthPx * 1.5;
+    const W = this.photoCanvas.width;
+    const H = this.photoCanvas.height;
+    const clamp = (x, y) => ({
+      x: Math.min(W - 50, Math.max(50, x)),
+      y: Math.min(H - 50, Math.max(50, y)),
+    });
+    if (isLongAnchor) {
+      // Sample at the body-side endpoint (anchor[0]), pulled slightly back
+      // along the line away from the product.
+      const ux = dx / len, uy = dy / len;
+      const back = -len * 0.05;
+      const p = clamp(anchors[0].x + ux * back, anchors[0].y + uy * back);
+      return sampleAverageColor(this.photoCanvas, p.x, p.y, 40);
+    }
+    // Short anchor → perpendicular offset of ~0.6× span, clamped to image.
+    const cx = (anchors[0].x + anchors[1].x) / 2;
+    const cy = (anchors[0].y + anchors[1].y) / 2;
+    const px = -dy / len, py = dx / len;
+    const offset = len * 0.6;
+    const p1 = clamp(cx + px * offset, cy + py * offset);
+    const p2 = clamp(cx - px * offset, cy - py * offset);
+    const c1 = sampleAverageColor(this.photoCanvas, p1.x, p1.y, 40);
+    const c2 = sampleAverageColor(this.photoCanvas, p2.x, p2.y, 40);
+    return {
+      r: Math.round((c1.r + c2.r) / 2),
+      g: Math.round((c1.g + c2.g) / 2),
+      b: Math.round((c1.b + c2.b) / 2),
+    };
+  }
+
   render({ anchors, params }) {
     const ctx = this.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -90,11 +144,16 @@ export class Compositor {
 
     const refMm = params.refMm || this.profile.refMm;
     const ppmm = pixelsPerMm(anchors[0], anchors[1], refMm);
-    const { width, height } = productPixelSize(
-      { widthMm: this.profile.dimensions.widthMm, heightMm: this.profile.dimensions.heightMm },
-      ppmm,
-      params.scale,
-    );
+    const visual = visualSizeMm(this.profile);
+    // Width is fixed by visualWidthMm × ppmm. Height respects the asset's
+    // own aspect ratio so the source image isn't stretched (a bracelet asset
+    // photographed laid-flat doesn't get crushed into a thin strip just
+    // because catalog height says 16mm).
+    const w = visual.widthMm * ppmm * params.scale;
+    const assetAspect = (this.productImage.naturalHeight || this.productImage.height) /
+                        (this.productImage.naturalWidth || this.productImage.width);
+    const width = w;
+    const height = w * assetAspect;
     const matrix = composeMatrix({
       anchorA: anchors[0],
       anchorB: anchors[1],
@@ -105,24 +164,31 @@ export class Compositor {
       liftPx: params.liftPx,
     });
 
-    if (params.ambientShadow > 0) {
-      drawAmbientShadow(ctx, this.preparedImage, matrix, {
-        opacity: params.ambientShadow,
-        blurPx: params.ambientShadowBlur,
+    if (params.castShadow > 0) {
+      drawCastShadow(ctx, this.preparedImage, matrix, {
+        opacity: params.castShadow,
+        blurPx: params.castShadowBlur,
+        distance: params.castShadowDistance,
+        angleDeg: params.lightAngleDeg,
       });
     }
     if (params.contactShadow > 0) {
       drawContactShadow(ctx, this.preparedImage, matrix, {
         opacity: params.contactShadow,
         blurPx: params.contactShadowBlur,
-        offsetX: params.shadowOffsetX,
-        offsetY: params.shadowOffsetY,
+        distance: params.contactShadowDistance,
+        angleDeg: params.lightAngleDeg,
       });
     }
     drawWithMatrix(ctx, this.preparedImage, matrix, params.productOpacity);
+
+    if (params.occlusionEnabled !== false) {
+      this.occlusion.applyTo(ctx, this.photoCanvas);
+    }
   }
 
-  // Export the current composite as a PNG data URL (full canvas resolution).
+  // Export the current composite as a PNG data URL. The caller is expected
+  // to render a clean composite (no anchor handles) before calling this.
   exportPNG() {
     return this.canvas.toDataURL("image/png");
   }
