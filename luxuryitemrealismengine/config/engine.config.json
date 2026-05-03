@@ -1,9 +1,14 @@
 {
   "name": "luxuryitemrealismengine",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "realismPath": "raster-png-webp-with-transparency",
+  "fallbackPath": "svg-silhouette",
   "paths": {
     "src": "./src",
+    "styles": "./styles",
     "assets": "./assets",
+    "products": "./assets/products",
     "config": "./config"
-  }
+  },
+  "categories": ["watch", "ring", "bracelet", "bag"]
 }
