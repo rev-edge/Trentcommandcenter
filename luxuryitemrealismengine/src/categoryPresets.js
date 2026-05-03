@@ -29,6 +29,13 @@ const COMMON_RENDER = {
   autoEdgeOcclude: true,      // auto-paint thin skin-edge halo each render
   autoEdgeTolerance: 0.16,
   autoEdgeReach: 16,
+  // Body clip — clips the whole product layer to the body silhouette so the
+  // strap "wraps behind" the wrist edge instead of continuing onto the table.
+  bodyClip: true,
+  bodyClipTolerance: 0.32,
+  bodyClipCaseLift: 0.55,    // re-draw central-case region on top so the
+                             // dial isn't holed by shadows / hair pixels
+                             // that missed the body threshold.
   // Occlusion (manual paint mask)
   occlusionEnabled: true,
 };
@@ -105,8 +112,10 @@ export const CATEGORY_PRESETS = {
       featherPx: 1.8,
       contactDarken: 0.20,
       directionalLight: 0.14,
-      autoEdgeOcclude: false,        // bags use the full auto-occlude flow, not edge-only
+      autoEdgeOcclude: false,
       autoEdgeReach: 24,
+      bodyClip: false,            // bags hang OFF the body intentionally
+      bodyClipCaseLift: 0,
     },
   },
 };

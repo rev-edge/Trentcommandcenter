@@ -216,6 +216,71 @@ export function drawDirectionalContactShadow(ctx, productImage, matrix, {
   ctx.restore();
 }
 
+// Body-silhouette mask. Builds a solid mask covering everywhere the photo
+// matches scene skin tone (with a generous tolerance + slight dilation +
+// soft blur). Used to CLIP the product layer so anything extending past
+// the body — typically a watch strap continuing onto the table — is hidden.
+// This is the main "wrap-around illusion" lever: the strap terminates
+// exactly where the wrist edge ends, reading as if it wraps behind the wrist.
+//
+// The mask is expensive to compute (full-photo pixel scan) so the caller
+// is expected to cache it per (photoCanvas, skinTone) pair.
+export function buildBodyMask(photoCanvas, skinTone, {
+  tolerance = 0.32,        // generous — we want to keep skin in shadow areas too
+  dilatePx = 6,            // grow the mask outward to give product edges margin
+  softPx = 4,              // light blur so the clip line isn't a razor cut
+} = {}) {
+  if (!photoCanvas || !skinTone) return null;
+  const W = photoCanvas.width;
+  const H = photoCanvas.height;
+  const photo = photoCanvas.getContext("2d", { willReadFrequently: true })
+    .getImageData(0, 0, W, H);
+  const out = new ImageData(W, H);
+  const tol = tolerance * 441;
+  // Use a HSL-like luminance-tolerant compare so wrist hair (darker than
+  // average skin) still classifies as body. Pure RGB distance kills hair.
+  const skinL = (skinTone.r + skinTone.g + skinTone.b) / 3;
+  for (let i = 0; i < photo.data.length; i += 4) {
+    const r = photo.data[i], g = photo.data[i + 1], b = photo.data[i + 2];
+    // Hue-similarity: ratios between channels (skin-like = R > G > B).
+    const reddish = r > b && r >= g - 5;
+    if (!reddish) continue;
+    const dr = r - skinTone.r;
+    const dg = g - skinTone.g;
+    const db = b - skinTone.b;
+    const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+    // Allow darker skin (hair, shadow) by checking distance against a wider
+    // luminance band.
+    const L = (r + g + b) / 3;
+    const luminanceOk = L >= skinL * 0.45 && L <= skinL * 1.6;
+    if (dist >= tol && !(luminanceOk && reddish)) continue;
+    out.data[i] = out.data[i + 1] = out.data[i + 2] = 255;
+    out.data[i + 3] = 255;
+  }
+  const raw = document.createElement("canvas");
+  raw.width = W; raw.height = H;
+  raw.getContext("2d").putImageData(out, 0, 0);
+  // Dilate via 8-direction offset stamps for a solid expanded mask.
+  const dilated = document.createElement("canvas");
+  dilated.width = W; dilated.height = H;
+  const dc = dilated.getContext("2d");
+  const r = dilatePx;
+  const offs = [
+    [r, 0], [-r, 0], [0, r], [0, -r],
+    [r, r], [r, -r], [-r, r], [-r, -r],
+    [r * 0.5, 0], [-r * 0.5, 0], [0, r * 0.5], [0, -r * 0.5],
+  ];
+  for (const [dx, dy] of offs) dc.drawImage(raw, dx, dy);
+  dc.drawImage(raw, 0, 0);
+  // Soft edge.
+  const soft = document.createElement("canvas");
+  soft.width = W; soft.height = H;
+  const sctx = soft.getContext("2d");
+  sctx.filter = `blur(${softPx}px)`;
+  sctx.drawImage(dilated, 0, 0);
+  return soft;
+}
+
 // Auto skin-edge occlusion. Builds a transient mask the same size as the
 // scene canvas that marks pixels matching scene skin tone within a thin
 // halo around the product perimeter. Returns the mask canvas; the caller
