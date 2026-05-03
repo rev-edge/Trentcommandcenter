@@ -31,6 +31,7 @@ const WIDGET_HTML = `
       <div class="lire-product-meta" data-product-meta hidden></div>
       <div class="lire-controls" data-controls></div>
       <div class="lire-actions">
+        <button data-replace-anchors>Re-place anchors</button>
         <button data-reset>Reset</button>
         <button data-export class="primary">Export PNG</button>
       </div>
@@ -41,5 +42,9 @@ const WIDGET_HTML = `
 export function mountLuxuryTryOn(host, options = {}) {
   if (!host) throw new Error("mountLuxuryTryOn: missing host element");
   host.innerHTML = WIDGET_HTML;
-  return mountWidget(host);
+  const api = mountWidget(host);
+  // Expose for visual-QA harnesses (and retailer integrations that want to
+  // drive the widget programmatically). Safe to remove in a strict embed build.
+  if (typeof window !== "undefined") window.luxuryTryOn = api;
+  return api;
 }

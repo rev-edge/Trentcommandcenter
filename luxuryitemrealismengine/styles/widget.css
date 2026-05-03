@@ -22,6 +22,7 @@
 }
 
 .lire-host * { box-sizing: border-box; }
+.lire-host [hidden] { display: none !important; }
 
 .lire-host {
   font-family: var(--lire-font);

@@ -12,37 +12,58 @@
 import { makeProfile } from "./productProfile.js";
 
 // ---------- Fallback SVG silhouettes (placeholder only) ----------
+//
+// IMPORTANT: every silhouette must fill the FULL viewBox edge-to-edge along
+// the product's nominal width × height. The compositor scales the entire SVG
+// canvas to widthMm × heightMm via the anchor-derived ppmm, so any padding
+// inside the viewBox visually shrinks the fallback below its declared size.
+// The silhouettes are then exactly to-scale stand-ins for the missing raster.
 
 const watchSilhouette = (style) => `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
-    <rect x="120" y="80" width="60" height="80" rx="6" fill="#3b3f47"/>
-    <rect x="120" y="240" width="60" height="80" rx="6" fill="#3b3f47"/>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="800" height="960" preserveAspectRatio="xMidYMid meet">
+    <!-- strap fills full vertical extent so the watch reads at its true size -->
+    <rect x="36" y="0"   width="28" height="38" rx="4" fill="#3b3f47"/>
+    <rect x="36" y="82"  width="28" height="38" rx="4" fill="#3b3f47"/>
     ${style === "square"
-      ? `<rect x="105" y="155" width="90" height="90" rx="14" fill="#1a1d29" stroke="#9aa0aa" stroke-width="3"/>`
-      : `<circle cx="150" cy="200" r="55" fill="#1a1d29" stroke="#9aa0aa" stroke-width="3"/>`}
+      ? `<rect x="14" y="34" width="72" height="52" rx="8" fill="#1a1d29" stroke="#9aa0aa" stroke-width="2"/>`
+      : `<ellipse cx="50" cy="60" rx="36" ry="26" fill="#1a1d29" stroke="#9aa0aa" stroke-width="2"/>`}
   </svg>`;
 
 const ringSilhouette = `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
-    <ellipse cx="150" cy="220" rx="80" ry="68" fill="none" stroke="#d4af37" stroke-width="14"/>
-    <polygon points="150,130 168,150 158,168 142,168 132,150" fill="#eaf3ff" stroke="#ffffff" stroke-width="1"/>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 78" width="800" height="624" preserveAspectRatio="xMidYMid meet">
+    <ellipse cx="50" cy="50" rx="44" ry="22" fill="none" stroke="#d4af37" stroke-width="9"/>
+    <polygon points="50,4 62,18 56,28 44,28 38,18" fill="#eaf3ff" stroke="#ffffff" stroke-width="0.6"/>
   </svg>`;
 
 const braceletSilhouette = `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
-    <rect x="20" y="190" width="260" height="22" rx="6" fill="#d4af37"/>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175 6" width="1400" height="48" preserveAspectRatio="xMidYMid meet">
+    <rect x="0" y="0" width="175" height="6" rx="2" fill="#d4af37"/>
   </svg>`;
 
-const bagSilhouette = (shape) => `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
-    ${shape === "mini"
-      ? `<path d="M 80 200 Q 150 130 220 200 L 210 290 Q 150 310 90 290 Z" fill="#7a4a2a"/>`
-      : shape === "shoulder"
-        ? `<path d="M 60 180 L 240 180 L 225 320 Q 150 340 75 320 Z" fill="#7a4a2a"/>`
-        : `<path d="M 50 160 L 250 160 L 240 330 L 60 330 Z" fill="#7a4a2a"/>
-           <path d="M 100 150 Q 100 90 130 90 Q 150 90 150 150" fill="none" stroke="#3a2615" stroke-width="6"/>
-           <path d="M 150 150 Q 150 90 170 90 Q 200 90 200 150" fill="none" stroke="#3a2615" stroke-width="6"/>`}
+const bagSilhouette = (shape) => {
+  if (shape === "mini") {
+    // 180 × 160 mm
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160" width="900" height="800" preserveAspectRatio="xMidYMid meet">
+      <path d="M 6 56 Q 90 0 174 56 L 168 150 Q 90 162 12 150 Z" fill="#7a4a2a"/>
+      <rect x="76" y="84" width="28" height="14" rx="2" fill="#d4af37"/>
+    </svg>`;
+  }
+  if (shape === "shoulder") {
+    // 250 × 200 mm
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 200" width="1000" height="800" preserveAspectRatio="xMidYMid meet">
+      <path d="M 8 30 L 242 30 L 226 196 Q 125 200 24 196 Z" fill="#7a4a2a"/>
+      <path d="M 6 30 Q 125 -120 244 30" fill="none" stroke="#3a2615" stroke-width="5"/>
+    </svg>`;
+  }
+  // tote 300 × 230 mm
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 230" width="1200" height="920" preserveAspectRatio="xMidYMid meet">
+    <path d="M 8 36 L 292 36 L 280 226 L 20 226 Z" fill="#7a4a2a"/>
+    <path d="M 80 36 Q 80 -34 110 -34 Q 140 -34 140 36" fill="none" stroke="#3a2615" stroke-width="6"/>
+    <path d="M 160 36 Q 160 -34 190 -34 Q 220 -34 220 36" fill="none" stroke="#3a2615" stroke-width="6"/>
+    <rect x="120" y="100" width="60" height="22" rx="2" fill="#3a2615"/>
+    <rect x="142" y="116" width="16" height="20" rx="1" fill="#d4af37"/>
   </svg>`;
+};
 
 // ---------- Asset path convention ----------
 

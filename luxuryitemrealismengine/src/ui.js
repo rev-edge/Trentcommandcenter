@@ -22,10 +22,16 @@ export function mountWidget(root) {
     badge: root.querySelector("[data-asset-badge]"),
     exportBtn: root.querySelector("[data-export]"),
     resetBtn: root.querySelector("[data-reset]"),
+    replaceAnchorsBtn: root.querySelector("[data-replace-anchors]"),
     productMeta: root.querySelector("[data-product-meta]"),
     emptyState: root.querySelector("[data-empty]"),
     stage: root.querySelector("[data-stage]"),
   };
+
+  // Hide controls/actions until a product is selected so the right rail
+  // doesn't show ghost rails in the empty state.
+  els.controls.hidden = true;
+  els.controls.parentElement.querySelector(".lire-actions").hidden = true;
 
   const state = {
     category: "watch",
@@ -88,6 +94,8 @@ export function mountWidget(root) {
     buildProducts();
     buildControls();
     updateProductMeta();
+    els.controls.hidden = false;
+    els.controls.parentElement.querySelector(".lire-actions").hidden = false;
     const { source, warning } = await compositor.setProduct(profile);
     updateAssetBadge(source, warning);
     if (compositor.photoCanvas && !anchors.points) {
@@ -198,7 +206,11 @@ export function mountWidget(root) {
 
   els.exportBtn.addEventListener("click", () => {
     if (!compositor.photoCanvas) return;
+    // Render a clean composite (no anchor handles) for export.
+    compositor.render({ anchors: anchors.points, params: state.params });
     const url = compositor.exportPNG();
+    // Restore the on-screen view with handles on top.
+    render();
     const a = document.createElement("a");
     a.href = url;
     a.download = `tryon-${state.profile?.id || "photo"}.png`;
@@ -214,6 +226,13 @@ export function mountWidget(root) {
     }
   });
 
+  els.replaceAnchorsBtn?.addEventListener("click", () => {
+    if (compositor.photoCanvas) {
+      anchors.autoPlace(els.canvas.width, els.canvas.height);
+      render();
+    }
+  });
+
   // Initial render
   buildTabs();
   buildProducts();
@@ -224,5 +243,9 @@ export function mountWidget(root) {
     selectProduct,
     loadPhoto,
     exportPNG: () => compositor.exportPNG(),
+    setAnchors: (a, b) => { anchors.setPoints(a, b); render(); },
+    getAnchors: () => anchors.points,
+    setParam: (key, value) => { state.params[key] = value; buildControls(); render(); },
+    getState: () => ({ category: state.category, profile: state.profile, params: state.params }),
   };
 }

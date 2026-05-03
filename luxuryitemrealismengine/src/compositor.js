@@ -32,7 +32,9 @@ export class Compositor {
     const off = document.createElement("canvas");
     off.width = this.canvas.width;
     off.height = this.canvas.height;
-    off.getContext("2d").drawImage(image, 0, 0, off.width, off.height);
+    // willReadFrequently is set because lighting.sampleAverageColor reads pixels
+    // every render to compute the ambient tint.
+    off.getContext("2d", { willReadFrequently: true }).drawImage(image, 0, 0, off.width, off.height);
     this.photoCanvas = off;
   }
 
